@@ -1,7 +1,7 @@
 # MAL Toolbox - The Basics
 
-## 1) Download the model and language specification
-https://github.com/mal-lang/mal-toolbox-tutorial/tree/main/res/mal-toolbox/basics
+## 1) Download the [model](https://github.com/mal-lang/mal-toolbox-tutorial/blob/main/res/mal-toolbox/basics/simple_example_model.json) and [language specification](https://github.com/mal-lang/mal-toolbox-tutorial/blob/main/res/mal-toolbox/common/org.mal-lang.coreLang-1.0.0.mar)
+
 
 ## 2) Run the command line client
 ```sh
