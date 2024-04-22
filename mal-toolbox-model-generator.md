@@ -46,3 +46,17 @@ appcon_apps_cr_assoc =\
 </tr>
 </table>
 
+### Add a new Identity asset called `YOOA Id`
+```
+os_app3_id = lang_classes_factory.ns.Identity('YOOA Id')
+model.add_asset(os_app3_id)
+```
+
+### Create a new ExecutionPrivilegeAccess association between the newly created OS Application and Identity
+```
+id_app3_assoc =\
+    lang_classes_factory.ns.ExecutionPrivilegeAccess(
+    executionPrivIAMs = [os_app3_id],
+    execPrivApps = [os_app3])
+model.add_association(id_app3_assoc)
+```
