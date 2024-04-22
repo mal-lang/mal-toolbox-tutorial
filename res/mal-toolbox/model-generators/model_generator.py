@@ -9,7 +9,7 @@ from maltoolbox.ingestors import neo4j
 
 logger = logging.getLogger(__name__)
 
-lang_file = 'org.mal-lang.coreLang-1.0.0.mar'
+lang_file = '../common/org.mal-lang.coreLang-1.0.0.mar'
 lang_spec = specification.load_language_specification_from_mar(lang_file)
 specification.save_language_specification_to_json(lang_spec, 'lang_spec.json')
 lang_classes_factory = classes_factory.LanguageClassesFactory(lang_spec)
