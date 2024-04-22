@@ -8,17 +8,20 @@ https://github.com/mal-lang/mal-toolbox-tutorial/tree/main/res/mal-toolbox/basic
 python -m maltoolbox gen_ag simple_example_model.json org.mal-lang.coreLang-1.0.0.mal
 ```
 
-## 3) Restart Neo4j
+## 3) Have a look at the attack graph file generated
+It is located in the tmp folder: `tmp/attackgraph.json`
+
+## 4) Restart Neo4j
 ```sh
 service neo4j restart
 ```
 
-## 4) Change the neo4j password
+## 5) Change the neo4j password
 ```sh
 ALTER USER neo4j SET PASSWORD '<new-password>'
 ```
 
-## 5) Update Neo4j configuration
+## 6) Update Neo4j configuration
 Update the neo4j section of the default.conf file.
 
 You can find the file location by running the following command:
@@ -36,7 +39,30 @@ password=mgg12345!
 dbname=neo4j
 ```
 
-## 6) Run the command line client with the neo4j parameter
+## 7) Run the command line client with the neo4j parameter
 ```sh
 python -m maltoolbox gen_ag --neo4j simple_example_model.json org.mal-lang.coreLang-1.0.0.mal
 ```
+
+## 8) Modify the debug level of the mal-toolbox python package
+Update the logging section of the default.conf file.
+
+You can find the file location by running the following command:
+
+```sh
+pip show mal-toolbox
+```
+
+Set the log_level configuration variable to DEBUG
+
+```
+log_level = DEBUG
+```
+
+## 8) Have a look at the log file generated
+Re-run the coomand line client 
+```sh
+python -m maltoolbox gen_ag --neo4j simple_example_model.json org.mal-lang.coreLang-1.0.0.mal
+```
+
+The log file should be present in the tmp folder: `tmp/log.txt`
