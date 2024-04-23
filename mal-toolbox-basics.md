@@ -41,7 +41,7 @@ dbname=neo4j
 
 ## 7) Run the command line client with the neo4j parameter
 ```sh
-python -m maltoolbox gen_ag --neo4j simple_example_model.json org.mal-lang.coreLang-1.0.0.mal
+python -m maltoolbox gen_ag --neo4j simple_example_model.json org.mal-lang.coreLang-1.0.0.mar
 ```
 
 ## 8) Modify the debug level of the mal-toolbox python package
@@ -62,7 +62,7 @@ log_level = DEBUG
 ## 8) Have a look at the log file generated
 Re-run the coomand line client 
 ```sh
-python -m maltoolbox gen_ag --neo4j simple_example_model.json org.mal-lang.coreLang-1.0.0.mal
+python -m maltoolbox gen_ag --neo4j simple_example_model.json org.mal-lang.coreLang-1.0.0.mar
 ```
 
 The log file should be present in the tmp folder: `tmp/log.txt`
