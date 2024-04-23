@@ -11,7 +11,7 @@ python model_generator.py
 ### Add a new Application asset called 'Yet Another OS App'
 
 ```
-os_app3 = lang_classes_factory.ns.Application(name = 'Yet Other OS App')
+os_app3 = lang_classes_factory.ns.Application(name = 'Yet Another OS App')
 model.add_asset(os_app3)
 ```
 
@@ -48,7 +48,7 @@ appcon_apps_cr_assoc =\
 
 ### Add a new Identity asset called `YOOA Id`
 ```
-os_app3_id = lang_classes_factory.ns.Identity('YOOA Id')
+os_app3_id = lang_classes_factory.ns.Identity('YAOA Id')
 model.add_asset(os_app3_id)
 ```
 
