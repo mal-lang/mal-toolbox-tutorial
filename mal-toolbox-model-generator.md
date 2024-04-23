@@ -46,7 +46,7 @@ appcon_apps_cr_assoc =\
 </tr>
 </table>
 
-### Add a new Identity asset called `YOOA Id`
+### Add a new Identity asset called `YAOA Id`
 ```
 os_app3_id = lang_classes_factory.ns.Identity('YAOA Id')
 model.add_asset(os_app3_id)
