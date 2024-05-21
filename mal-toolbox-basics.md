@@ -5,7 +5,7 @@
 
 ## 2) Run the command line client
 ```sh
-python -m maltoolbox gen_ag simple_example_model.json org.mal-lang.coreLang-1.0.0.mal
+python3 -m maltoolbox attack-graph generate simple_example_model.json org.mal-lang.coreLang-1.0.0.mar
 ```
 
 ## 3) Have a look at the attack graph file generated
@@ -41,7 +41,7 @@ dbname=neo4j
 
 ## 7) Run the command line client with the neo4j parameter
 ```sh
-python -m maltoolbox gen_ag --neo4j simple_example_model.json org.mal-lang.coreLang-1.0.0.mar
+python3 -m maltoolbox attack-graph generate --neo4j simple_example_model.json org.mal-lang.coreLang-1.0.0.mar
 ```
 
 ## 8) Modify the debug level of the mal-toolbox python package
@@ -59,10 +59,10 @@ Set the log_level configuration variable to DEBUG
 log_level = DEBUG
 ```
 
-## 8) Have a look at the log file generated
+## 9) Have a look at the log file generated
 Re-run the coomand line client 
 ```sh
-python -m maltoolbox gen_ag --neo4j simple_example_model.json org.mal-lang.coreLang-1.0.0.mar
+python3 -m maltoolbox attack-graph generate --neo4j simple_example_model.json org.mal-lang.coreLang-1.0.0.mar
 ```
 
 The log file should be present in the tmp folder: `tmp/log.txt`
