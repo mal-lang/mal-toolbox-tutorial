@@ -12,7 +12,7 @@ pip install py2neo
 This is an optional requirement that is necessary if you want to use the Neo4j ingestor submodule.
 
 
-## 3) Install the mal-petting-zoo-simulator python package
+## 3) Install the mal-simulator python package
 ```sh
-pip install mal-petting-zoo-simulator
+pip install mal-simulator
 ```
