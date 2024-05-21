@@ -8,13 +8,13 @@
   },
   "assets": {
     "0": {
-      "name": "OS App:0",
+      "name": "OS App",
       "metaconcept": "Application",
       "eid": "0",
       "defenses": {}
     },
     "1": {
-      "name": "Program 1:1",
+      "name": "Program 1",
       "metaconcept": "Application",
       "eid": "1",
       "defenses": {}
@@ -50,19 +50,19 @@
       "defenses": {}
     },
     "7": {
-      "name": "Other OS App:7",
+      "name": "Other OS App",
       "metaconcept": "Application",
       "eid": "7",
       "defenses": {}
     },
     "8": {
-      "name": "Yet Other OS App:8",
+      "name": "Yet Other OS App",
       "metaconcept": "Application",
       "eid": "8",
       "defenses": {}
     },
     "9": {
-      "name": "YOOA Id:9",
+      "name": "YOOA Id",
       "metaconcept": "Identity",
       "eid": "9",
       "defenses": {}
