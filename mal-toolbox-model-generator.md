@@ -1,21 +1,21 @@
 # MAL Toolbox Model Generators
 
-## 1) Run the example model generator script
+## 1) Run the example model generator script (located in ./res/model-generators)
 ```sh
 python model_generator.py
 ```
-## 2) Inspect the `example_model.json` file that was generated
+## 2) Inspect the `example_model.json` file that was generated (in ./tmp)
 
 ## 3) Modify the model_generator.py file
 
-### Add a new Application asset called 'Yet Another OS App'
+- Add a new Application asset called 'Yet Another OS App' after the line where os_app2 is added.
 
 ```
 os_app3 = lang_classes_factory.ns.Application(name = 'Yet Another OS App')
 model.add_asset(os_app3)
 ```
 
-### Modify the existing association between the ConnectionRule and Applications to include this new OS Application as well
+- Modify the existing association between the ConnectionRule and Applications to include this new OS Application as well
 
 <table>
 <tr>
