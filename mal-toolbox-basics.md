@@ -8,11 +8,11 @@
 
 ### 1) Run the command line client
 ```sh
-python3 -m maltoolbox attack-graph generate simple_example_model.json org.mal-lang.coreLang-1.0.0.mar
+python3 -m maltoolbox attack-graph generate simple_example_model.yml org.mal-lang.coreLang-1.0.0.mar
 ```
 
 ### 2) Have a look at the attack graph file generated
-It is located in the tmp folder: `tmp/attackgraph.json`
+It is located in the tmp folder: `tmp/attackgraph.yml`
 
 ### 3) Restart Neo4j
 ```sh
