@@ -3,7 +3,7 @@
 ## Preparations
 - Install maltoolbox
 - Install [neo4j](https://neo4j.com/docs/operations-manual/current/installation/)
-- Download the [model](https://github.com/mal-lang/mal-toolbox-tutorial/blob/main/res/mal-toolbox/basics/simple_example_model.yml) and the [coreLang language specification](https://github.com/mal-lang/mal-toolbox-tutorial/blob/main/res/mal-toolbox/common/org.mal-lang.coreLang-1.0.0.mar)
+- Download the [model](https://github.com/mal-lang/mal-toolbox-tutorial/blob/main/res/mal-toolbox/common/simple_example_model.yml) and the [coreLang language specification](https://github.com/mal-lang/mal-toolbox-tutorial/blob/main/res/mal-toolbox/common/org.mal-lang.coreLang-1.0.0.mar)
 
 ## Command line interface - Generate and display Attack Graph in neo4j
 
