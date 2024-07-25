@@ -4,7 +4,7 @@
 ```sh
 python model_generator.py
 ```
-## 2) Inspect the `example_model.json` file that was generated (in ./tmp)
+## 2) Inspect the `example_model.yml` file that was generated (in ./tmp)
 
 ## 3) Modify the model_generator.py file
 
