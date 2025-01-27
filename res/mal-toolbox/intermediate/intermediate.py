@@ -9,22 +9,27 @@ from maltoolbox.ingestors import neo4j
 
 logger = logging.getLogger(__name__)
 
+# Using coreLang
 lang_file = '../common/org.mal-lang.coreLang-1.0.0.mar'
 lang_graph = LanguageGraph.from_mar_archive(lang_file)
 lang_classes_factory = LanguageClassesFactory(lang_graph)
 
+# Load a model
 model = Model.load_from_file('../common/simple_example_model.yml', lang_classes_factory)
 
+# Create an AttackGraph
 graph = AttackGraph(lang_graph, model)
 graph.attach_attackers()
-os_app_local_access = graph.get_node_by_id('OS App:localAccess')
+os_app_local_access = graph.get_node_by_full_name('OS App:localAccess')
 os_app_np = graph.get_node_by_full_name('OS App:notPresent')
 os_app_np.defense_status = 1.0
 
+# Save attack graph before viability and necessity calculated
 graph.save_to_file('ag.yml')
 
 apriori.calculate_viability_and_necessity(graph)
 
+# Save attack graph after viability necessity calculated
 graph.save_to_file('post_ag.yml')
 
 attacker = graph.attackers[0]
