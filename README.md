@@ -1,8 +1,6 @@
 # mal-toolbox-tutorial
 A tutorial on how to use mal-toolbox and associated tools
 
-# Start your MAL journey
-
 ## What is MAL?
 A language to create cyber threat modeling systems for specific domains.
 
