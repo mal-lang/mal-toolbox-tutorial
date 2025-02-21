@@ -10,9 +10,6 @@ Read more about MAL at: https://mal-lang.org
 
 For maltoolbox api docs, visit: https://mal-lang.org/mal-toolbox/
 
-## Prerequsites
-`pip install mal-toolbox mal-simulator`
-
 ## 1. Create a MAL Language
 
 A MAL language defines a domain to work within.
