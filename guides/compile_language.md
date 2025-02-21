@@ -1,4 +1,4 @@
-# Compile a MAL Language maltoolbox 0.3.*
+# Compile a MAL Language
 
 ## Prerequisites:
 - Install [maltoolbox](https://github.com/mal-lang/mal-toolbox)
