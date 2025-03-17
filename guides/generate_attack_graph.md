@@ -12,8 +12,8 @@ Prerequisites:
 ### Example:
 ```bash
 
-# Language given as a .json
-maltoolbox attack-graph generate [options] model.yml coreLang.json
+# Language given as a .mal
+maltoolbox attack-graph generate [options] model.yml main.mal
 
 # Language given as a .mar
 maltoolbox attack-graph generate [options] model.yml org.mal-lang.coreLang-1.0.0.mar
