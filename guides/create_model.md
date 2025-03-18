@@ -2,7 +2,6 @@
 
 ## Prerequisites:
 - You have [mal-toolbox](https://github.com/mal-lang/mal-toolbox) installed.
-- You have a language [compiled](compile_language.md) with `malc`.
 
 ## Creating a MAL Model using the mal-gui
 
