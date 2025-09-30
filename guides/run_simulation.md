@@ -35,7 +35,7 @@ rewards:
 # Format is the same for observable_steps, actionable_steps, false_positive_rates, false_negative_rates and all are optional.
 ```
 
-The scenario file can then be run with the MalSimulator cli: `malsim scenario_file.yml` which also takes some optional args like seed and ttc mode.
+The scenario file can be run with the MalSimulator cli: `malsim guides/scripts/scenario.yml` which also takes some optional args like seed and ttc mode.
 
 It can also be run programatically like this:
 ```python
@@ -47,6 +47,8 @@ sim = MalSimulator.from_scenario(scenario)
 run_simulation(sim, scenario.agents)
 
 ```
+
+See [example script](scripts/run_simulation.py).
 
 ## Option 2: Scenario object
 

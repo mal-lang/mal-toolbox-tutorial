@@ -11,11 +11,6 @@ logging:
   attackgraph_file: "logs/attackgraph.yml"
   model_file: "logs/model.yml"
   langspec_file: "logs/langspec_file.yml"
-neo4j:
-  uri: None
-  username: None
-  password: None
-  dbname: None
 ```
 
-You can change log level, log file, where files are output and the neo4j settings if you are doing visualization in neo4j.
+You can change log level, log file, and output file paths.

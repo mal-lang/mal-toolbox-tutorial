@@ -1,6 +1,6 @@
 # mal-toolbox-tutorial
 A tutorial on how to use mal-toolbox and associated tools.
-This tutorial is written to work for mal-toolbox 0.3.*.
+This tutorial is written to work for mal-toolbox and mal-simulator 1.0.*.
 
 ## What is MAL?
 A language to create cyber threat modeling systems for specific domains.
