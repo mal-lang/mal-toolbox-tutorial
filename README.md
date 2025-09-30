@@ -52,4 +52,4 @@ The MAL Toolbox can be used to generate an attack graph from a model and languag
 You now have a language, a model and an attack graph. A probable next step is to run analysis, traversal or simulations.
 If you want to run simulations or traverse the graph using different types of agents, use the MAL simulator (https://github.com/mal-lang/mal-simulator/).
 
-TODO: provide guide on how to run simulations in MAL Simulator. For now we refer to the MAL-simulator README on github.
+[Guide on how to run simulations with your attack graph](guides/run_simulation.md).
