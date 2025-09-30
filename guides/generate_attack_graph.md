@@ -2,7 +2,7 @@
 
 Prerequisites:
 - [MAL Toolbox](https://github.com/mal-lang/mal-toolbox)
-- A compiled MAL Language [Compiling a MAL Lanugage](compile_language.md).
+- A compiled MAL Language [Compiling a MAL Lanugage](compile_language.md) or a .mal-file.
 - A model file (.yml/.json) - [Creating a MAL model](create_model.md).
 
 ## Option 1: Using the MAL Toolbox cli
