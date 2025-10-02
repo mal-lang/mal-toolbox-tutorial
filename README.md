@@ -1,6 +1,8 @@
 # mal-toolbox-tutorial
 A tutorial on how to use mal-toolbox and associated tools.
-This tutorial is written to work for mal-toolbox and mal-simulator 1.0.*.
+Examples in this repository is written to work for mal-toolbox and mal-simulator 1.0.*.
+This repository contains tutorials and guides on how to do things with the toolbox and simulator, as well as other tools in the MAL ecosystem.
+
 
 ## What is MAL?
 A language to create cyber threat modeling systems for specific domains.
@@ -9,7 +11,17 @@ Read more about MAL at: https://mal-lang.org
 
 For maltoolbox api docs, visit: https://mal-lang.org/mal-toolbox/
 
-## 1. Create a MAL Language
+## Tutorials
+
+Tutorials are step by step instructions that you can follow along with.
+
+- [Tutorial 1 - Create model and run simulations](tutorials/tutorial1/tutorial1.md)
+
+## Guides
+
+Guides work as documentation for separate parts of the mal ecosystem.
+
+### Create a MAL Language
 
 A MAL language defines a domain to work within.
 
@@ -20,23 +32,23 @@ Each MAL language consists of assets with defense steps, attack steps and associ
 
 More documentation on MAL syntax: https://github.com/mal-lang/mal-documentation/wiki/MAL-Code-Examples.
 
-## 2. Compile the language
+### Compiling a language
 
 [Guide on how to compile a MAL language](guides/compile_language.md).
 
 
-## 3. Create a MAL model using your language
+### Create a MAL model using your language
 
 A model is a description of a specific infrastructure in your MAL languages terminology.
 A model contains assets and relations between assets.
 
 [Guide on how to create a MAL model for the MAL toolbox](guides/create_model.md).
 
-### Visualizing a model
+#### Visualizing a model
 
 [Guide on how to visualize a model](guides/visualize.md).
 
-## 4. Generate an attack graph from your model
+### Generate an attack graph from your model
 
 An attack graph is a granular representation of the infrastructure defined in the model from an 'action' perspective.
 All the attacks and defenses will be generated for each asset according to how they were defined in the MAL language.
@@ -44,10 +56,10 @@ The MAL Toolbox can be used to generate an attack graph from a model and languag
 
 [Guide on how to generate an attack graph](guides/generate_attack_graph.md).
 
-### Visualizing an attack graph
+#### Visualizing an attack graph
 [Guide on how to visualize an attack graph](guides/visualize.md).
 
-## 5. Run simulations / traverse the attack graph
+### Run simulations / traverse the attack graph
 
 You now have a language, a model and an attack graph. A probable next step is to run analysis, traversal or simulations.
 If you want to run simulations or traverse the graph using different types of agents, use the MAL simulator (https://github.com/mal-lang/mal-simulator/).
