@@ -187,6 +187,8 @@ Try this out with different agents in `malsim.agents`.
 
 `run_simulation` will return the path taken by each agent.
 
-To make it more interesting, we probably want to add TTCs to the simulations (time to compromise) and use some form of path finding. TODO.
+To make it more interesting, we can add TTCs to the simulations and use the TTCSoftMinAttacker policy for our attacker.
 
-See all resulting files in this directory.
+We can also add a defender.
+
+See the finished script in [simulate.py](simulate.py).

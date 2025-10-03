@@ -20,7 +20,7 @@ def connect_net_to_net(model: Model, net1: ModelAsset, net2: ModelAsset):
     return cr_asset
 
 
-def connect_app_to_net(model: Model, app: ModelAsset, net: ModelAsset):
+def connect_app_to_net(model: Model, app: ModelAsset, net: ModelAsset) -> ModelAsset:
     """
     Create a connection rule between app and net and return it.
     """
@@ -31,7 +31,7 @@ def connect_app_to_net(model: Model, app: ModelAsset, net: ModelAsset):
     return cr_asset
 
 
-def add_vulnerability_to_app(model: Model, app: ModelAsset):
+def add_vulnerability_to_app(model: Model, app: ModelAsset) -> ModelAsset:
     """
     Add vulnerability and association from `app` to the vuln.
     Return the vuln.
@@ -42,15 +42,34 @@ def add_vulnerability_to_app(model: Model, app: ModelAsset):
     return vuln_asset
 
 
-def add_data_to_app(model: Model, app: ModelAsset, data_asset_name: str):
+def add_data_to_app(model: Model, app: ModelAsset, data_asset_name: str) -> ModelAsset:
     """
     Add a data asset and association from `app` to the data.
-    reutrn the data asset.
+    return the data asset.
     """
     data_asset = model.add_asset("Data", data_asset_name)
     data_asset.add_associated_assets("containingApp", [app])
     return data_asset
 
+
+def add_user_to_app(model: Model, app: ModelAsset, data_asset_name: str) -> ModelAsset:
+    """
+    Add a user asset and association from `app` to the user.
+    return the user asset.
+    """
+    user_asset = model.add_asset("Identity", data_asset_name)
+    user_asset.add_associated_assets("execPrivApps", [app])
+    return user_asset
+
+
+def add_creds_to_user(model: Model, identity: ModelAsset, data_asset_name: str) -> ModelAsset:
+    """
+    Add a credentials asset and association from `identity` to the credentials.
+    return the credentials asset.
+    """
+    creds_asset = model.add_asset("Credentials", data_asset_name)
+    creds_asset.add_associated_assets("identities", [identity])
+    return creds_asset
 
 
 def create_model(lang_graph: LanguageGraph) -> Model:
@@ -79,6 +98,12 @@ def create_model(lang_graph: LanguageGraph) -> Model:
     # Add data to app4
     add_data_to_app(model, app4, "DataOnApp4")
 
+    # Add user to app3
+    user_on_app_3 = add_user_to_app(model, app3, "UserOnApp3")
+
+    # Add user to app3
+    add_creds_to_user(model, user_on_app_3, "User3Creds")
+
     return model
 
 
@@ -97,15 +122,26 @@ def main():
     # render_model(model) # Uncomment to render graphviz pdf
     # render_attack_graph(graph) # Uncomment to render graphviz pdf
 
-    simulator = MalSimulator(graph, sim_settings=MalSimulatorSettings(
-        ttc_mode=TTCMode.PRE_SAMPLE
-    ))
+    simulator = MalSimulator(
+        graph,
+        sim_settings=MalSimulatorSettings(
+            ttc_mode=TTCMode.PRE_SAMPLE
+        )
+    )
 
     attacker_name = "MyAttacker"
     simulator.register_attacker(
-        attacker_name, entry_points=["App 1:fullAccess"], goals=["DataOnApp4:read"]
+        attacker_name,
+        entry_points={"App 1:fullAccess"},
+        goals={'DataOnApp4:read'},
     )
-    agents =  [{'name': attacker_name, "agent": TTCSoftMinAttacker({})}]
+    # Uncomment to enable a defender
+    # defender_name = "MyDefender"
+    # simulator.register_defender(defender_name)
+    agents =  [
+        {'name': attacker_name, "agent": TTCSoftMinAttacker({})},
+        # {'name': defender_name, "agent": RandomAgent({})}
+    ]
     paths = run_simulation(simulator, agents)
     attacker_path = paths[attacker_name]
 
