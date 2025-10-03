@@ -29,6 +29,7 @@ Each MAL language consists of assets with defense steps, attack steps and associ
 
 - A very simple example of a MAL language: https://github.com/mal-lang/exampleLang 
 - A more complex MAL language: https://github.com/mal-lang/coreLang
+- VSCode plugin for syntax highlighting and search by reference: https://github.com/mal-lang/mal-vscode-extension
 
 More documentation on MAL syntax: https://github.com/mal-lang/mal-documentation/wiki/MAL-Code-Examples.
 
