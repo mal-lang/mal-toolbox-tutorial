@@ -1,8 +1,11 @@
 # Compile a MAL Language
 
+
 ## Prerequisites:
 - Install [maltoolbox](https://github.com/mal-lang/mal-toolbox)
 - Create/download a MAL language in .mal file(s)
+
+Note: You can also load .mal-files directly in the MAL-toolbox, but compiling the language with malc is still adviced since it has better error handling than the toolbox.
 
 <!-- ## Option 1: Use the MAL Toolbox to compile the language
 
