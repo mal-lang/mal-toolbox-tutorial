@@ -20,6 +20,10 @@ or
 
 `python -m venv .venv`
 
+Use your virtual environment:
+
+`source .venv/bin/activate`
+
 Install requirements: 
 - `pip install mal-toolbox`
 - `pip install mal-simulator`
