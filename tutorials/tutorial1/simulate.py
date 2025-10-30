@@ -108,7 +108,7 @@ def create_model(lang_graph: LanguageGraph) -> Model:
 
 
 def main():
-    lang_file = "org.mal-lang.tyrLang-0.0.8.mar"
+    lang_file = "tyrLang/src/main/mal/main.mal"
     current_dir = os.path.dirname(os.path.abspath(__file__))
     lang_file_path = os.path.join(current_dir, lang_file)
     tyr_lang = LanguageGraph.load_from_file(lang_file_path)
