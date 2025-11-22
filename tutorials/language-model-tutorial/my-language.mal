@@ -1,0 +1,25 @@
+#id: "org.mal-lang.my-language"
+#version: "1.0.0"
+
+category System {
+    asset Computer {
+        | connect
+            -> access
+        | crackPassword
+            -> access
+        & access
+            -> compromise
+	    | compromise
+            ->  folder.accessFolder
+    }
+    asset Folder {
+        | accessFolder
+            -> stealSecrets
+        | stealSecrets
+    }
+}
+
+associations {
+    Computer [computer1] * <-- ComputerConnectionRule --> * [computer2] Computer
+    Computer [computer] * <-- ComputerFolderConnectionRule --> * [folder] Folder
+}
