@@ -20,6 +20,6 @@ category System {
 }
 
 associations {
-    Computer [computer1] * <-- ComputerConnectionRule --> * [computer2] Computer
-    Computer [computer] * <-- ComputerFolderConnectionRule --> * [folder] Folder
+    Computer [computer1] * <-- ComputerConnection --> * [computer2] Computer
+    Computer [computer] * <-- ComputerFolderConnection --> * [folder] Folder
 }

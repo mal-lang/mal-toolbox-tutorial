@@ -1,28 +1,6 @@
 import os
-from maltoolbox.model import Model, ModelAsset
+from maltoolbox.model import Model
 from maltoolbox.language import LanguageGraph
-
-
-def connect_computer_to_computer(model: Model, comp1: ModelAsset, comp2: ModelAsset):
-    """
-    Create a connection rule between comp1 and comp2 and return it.
-    """
-    cr_asset_name = f"ConnectionRule {comp1.name} {comp2.name}"
-    cr_asset = model.add_asset("ComputerConnectionRule", cr_asset_name)
-    comp1.add_associated_assets("computer1", [cr_asset])
-    comp2.add_associated_assets("computer2", [cr_asset])
-    return cr_asset
-
-
-def connect_computer_to_folder(model: Model, comp: ModelAsset, folder: ModelAsset):
-    """
-    Create a connection rule between comp and folder and return it.
-    """
-    cr_asset_name = f"ConnectionRule {comp.name} {folder.name}"
-    cr_asset = model.add_asset("ComputerFolderConnectionRule", cr_asset_name)
-    comp.add_associated_assets("computer", [cr_asset])
-    folder.add_associated_assets("folder", [cr_asset])
-    return cr_asset
 
 
 def create_model(lang_graph: LanguageGraph) -> Model:
@@ -34,13 +12,15 @@ def create_model(lang_graph: LanguageGraph) -> Model:
     comp_b = model.add_asset("Computer", "ComputerB")
 
     # Connection between computers
-    connect_computer_to_computer(model, comp_a, comp_b)
+    comp_a.add_associated_assets("computer2", [comp_b])
 
-    # two folders with connection to the computers
-    folder1 = model.add_asset("Folder", "ComputerA")
-    connect_computer_to_folder(model, comp_a, folder1)
-    folder2 = model.add_asset("Folder", "ComputerB")
-    connect_computer_to_folder(model, comp_b, folder2)
+    # Two folders
+    folder1 = model.add_asset("Folder", "FolderA")
+    folder2 = model.add_asset("Folder", "FolderB")
+
+    # Connect the folders to the computers
+    comp_b.add_associated_assets("folder", [folder2])
+    comp_a.add_associated_assets("folder", [folder1])
 
     return model
 

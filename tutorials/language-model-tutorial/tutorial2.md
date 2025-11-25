@@ -43,8 +43,8 @@ category System {
 }
 
 associations {
-    Computer [computer1] * <-- ComputerConnectionRule --> * [computer2] Computer
-    Computer [computer] * <-- ComputerFolderConnectionRule --> * [folder] Folder
+    Computer [computer1] * <-- ComputerConnection --> * [computer2] Computer
+    Computer [computer] * <-- ComputerFolderConnection --> * [folder] Folder
 }
 ```
 
@@ -65,36 +65,10 @@ Copy this code into `my-model.py`:
 
 ```python
 import os
-from maltoolbox.model import Model, ModelAsset
+from maltoolbox.model import Model
 from maltoolbox.language import LanguageGraph
 
 
-def connect_computer_to_computer(model: Model, comp1: ModelAsset, comp2: ModelAsset):
-    """
-    Create a connection rule between comp1 and comp2 and return it.
-    """
-    cr_asset_name = f"ConnectionRule {comp1.name} {comp2.name}"
-    cr_asset = model.add_asset("ComputerConnectionRule", cr_asset_name)
-    comp1.add_associated_assets("computer1", [cr_asset])
-    comp2.add_associated_assets("computer2", [cr_asset])
-    return cr_asset
-
-
-def connect_computer_to_folder(model: Model, comp: ModelAsset, folder: ModelAsset):
-    """
-    Create a connection rule between comp and folder and return it.
-    """
-    cr_asset_name = f"ConnectionRule {comp.name} {folder.name}"
-    cr_asset = model.add_asset("ComputerFolderConnectionRule", cr_asset_name)
-    comp.add_associated_assets("computer", [cr_asset])
-    folder.add_associated_assets("folder", [cr_asset])
-    return cr_asset
-```
-These helper functions are made to work with the our `my-language.mal` language. Here we defined how the assets will connect with each other. Each function creates assets in a model and connects the assets to other assets using associations.
-
-Now we can create a model and use the helper methods. Add this to the end of the file:
-
-```python
 def create_model(lang_graph: LanguageGraph) -> Model:
     """Create a model with 2 computers"""
     model = Model("my-model", lang_graph)
@@ -104,17 +78,26 @@ def create_model(lang_graph: LanguageGraph) -> Model:
     comp_b = model.add_asset("Computer", "ComputerB")
 
     # Connection between computers
-    connect_computer_to_computer(model, comp_a, comp_b)
+    comp_a.add_associated_assets("computer2", [comp_b])
 
-    # two folders with connection to the computers
-    folder1 = model.add_asset("Folder", "ComputerA")
-    connect_computer_to_folder(model, comp_a, folder1)
-    folder2 = model.add_asset("Folder", "ComputerB")
-    connect_computer_to_folder(model, comp_b, folder2)
+    # Two folders
+    folder1 = model.add_asset("Folder", "FolderA")
+    folder2 = model.add_asset("Folder", "FolderB")
+
+    # Connect the folders to the computers
+    comp_b.add_associated_assets("folder", [folder2])
+    comp_a.add_associated_assets("folder", [folder1])
 
     return model
+```
+In this simple function, we create:
+- Two instances of our `Computer` asset (`ComputerA` and `ComputerB`) and our `Folder` asset (`FolderA` and `FolderB`).
+- A connection between `ComputerA` and `ComputerB`. The string `"computer2"` comes from the `ComputerConnection` association in the MAL language we created. 
+- Two connections between the computer and folder instances. The strings `"folder"` come from the `ComputerFolderConnection` association.
 
+Now we can instantiate the model and compile. Add this to the end of the file:
 
+```python
 def main():
     lang_file = "my-language.mal"
     current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -128,5 +111,4 @@ def main():
 if __name__ == "__main__":
     main()
 ```
-
-To compile this, run the script with `python my-model.py`.
+Change `lang_file` accordingly. Here we create the model using our own language. To compile it, run the script with `python my-model.py`.
