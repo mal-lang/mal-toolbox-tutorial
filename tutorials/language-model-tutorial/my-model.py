@@ -1,6 +1,9 @@
 import os
 from maltoolbox.model import Model
 from maltoolbox.language import LanguageGraph
+from maltoolbox.attackgraph import AttackGraph
+from malsim import MalSimulator, run_simulation
+from malsim.agents import RandomAgent
 
 
 def create_model(lang_graph: LanguageGraph) -> Model:
@@ -33,6 +36,15 @@ def main():
 
     # Create our example model
     model = create_model(my_language)
+
+    graph = AttackGraph(my_language, model)
+
+    simulator = MalSimulator(graph)
+    simulator.register_attacker(
+        "MyAttacker", entry_points=["ComputerA:connect"], goals=["FolderB:stealSecrets"]
+    )
+    agents = [{"name": "MyAttacker", "agent": RandomAgent({})}]
+    path = run_simulation(simulator, agents)
 
 
 if __name__ == "__main__":

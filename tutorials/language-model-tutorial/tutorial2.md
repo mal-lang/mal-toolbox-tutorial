@@ -2,6 +2,7 @@
 In this tutorial, you will learn how to build a simple MAL language and create a model from it.
 
 ## Step by step
+### Environment set-up
 Create a directory for the tutorial and set it as your working directory: `mkdir mal-tutorial2 && cd mal-tutorial2`
 Create a Python virtual environment and activate it.
 - On Linux-based operating systems:
@@ -14,8 +15,13 @@ source .venv/bin/activate
 python -m venv .venv
 .\.venv\Scripts\activate
 ```
-Install the requirements: `pip install mal-toolbox`.
+Install the requirements:
+```
+pip install mal-toolbox
+pip install mal-simulator
+```
 
+### MAL language creation
 Create a MAL file in the same directory called `my-language.mal`.
 
 Copy this code into `my-language.mal`:
@@ -59,6 +65,7 @@ In the `associations` section we define the relationship assets have. In this ca
 
 Once we have the MALLang file, we can create a python file to create models from this language.
 
+### Create and compile the model
 Create a .py file in the same directory called `my-model.py`.
 
 Copy this code into `my-model.py`:
@@ -112,3 +119,48 @@ if __name__ == "__main__":
     main()
 ```
 Change `lang_file` accordingly. Here we create the model using our own language. To compile it, run the script with `python my-model.py`.
+
+### Create an attack graph
+To create an attack graph, we use the model and the MALLang. Add this import to the top of the file (below the other imports):
+
+```python
+from maltoolbox.attackgraph import AttackGraph
+```
+
+Put this line after `model = create_model(tyr_lang)`:
+
+```python
+# Generate an attack graph from the model
+graph = AttackGraph(my_language, model)
+```
+
+The attack graph is a representation of the model that folds out all of the attack steps defined in the MAL language. This can be used to run analysis or simulations.
+
+### Run simulation
+To run simulations, add these imports to the top of the file (below the other imports):
+
+```python
+from malsim import MalSimulator, run_simulation
+from malsim.agents import RandomAgent
+```
+
+Now we can create a MalSimulator from the attack graph `graph` and run simulations.
+
+Add this to the end of the `main` function:
+
+```python
+simulator = MalSimulator(graph)
+agents = {}
+path = run_simulation(simulator, agents)
+```
+
+When we run `python my-model.py` we will just see "Simulation over after 0 steps.". This is because we don't have any agents. Let us add an attacker agent.
+
+Replace the line `agents` with:
+
+```python
+simulator.register_attacker("MyAttacker", entry_points=["ComputerA:connect"], goals=["FolderB:stealSecrets"])
+agents =  [{'name': "MyAttacker", "agent": RandomAgent({})}]
+```
+
+This registers an attacker in the simulator, and creates a list of decision agents that can be used to take decisions for the simulator attacker.
