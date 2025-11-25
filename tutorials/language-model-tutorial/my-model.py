@@ -4,7 +4,6 @@ from maltoolbox.language import LanguageGraph
 
 
 def create_model(lang_graph: LanguageGraph) -> Model:
-    """Create a model with 2 computers"""
     model = Model("my-model", lang_graph)
 
     # Two computers
