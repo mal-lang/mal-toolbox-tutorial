@@ -5,12 +5,14 @@ category System {
     asset Computer {
         | connect
             -> access
-        | crackPassword
+        | crackPassword [HardAndCertain]
             -> access
         & access
             -> compromise
 	    | compromise
             ->  folder.accessFolder
+            -> toComputer.connect
+            -> toComputer.crackPassword
     }
     asset Folder {
         | accessFolder
@@ -20,6 +22,6 @@ category System {
 }
 
 associations {
-    Computer [computer1] * <-- ComputerConnection --> * [computer2] Computer
+    Computer [fromComputer] * <-- ComputerConnection --> * [toComputer] Computer
     Computer [computer] * <-- ComputerFolderConnection --> * [folder] Folder
 }

@@ -34,12 +34,14 @@ category System {
     asset Computer {
         | connect
             -> access
-        | crackPassword
+        | crackPassword [HardAndCertain]
             -> access
         & access
             -> compromise
 	    | compromise
             ->  folder.accessFolder
+            -> toComputer.connect
+            -> toComputer.crackPassword
     }
     asset Folder {
         | accessFolder
@@ -49,7 +51,7 @@ category System {
 }
 
 associations {
-    Computer [computer1] * <-- ComputerConnection --> * [computer2] Computer
+    Computer [fromComputer] * <-- ComputerConnection --> * [toComputer] Computer
     Computer [computer] * <-- ComputerFolderConnection --> * [folder] Folder
 }
 ```
@@ -85,7 +87,7 @@ def create_model(lang_graph: LanguageGraph) -> Model:
     comp_b = model.add_asset("Computer", "ComputerB")
 
     # Connection between computers
-    comp_a.add_associated_assets("computer2", [comp_b])
+    comp_a.add_associated_assets("toComputer", [comp_b])
 
     # Two folders
     folder1 = model.add_asset("Folder", "FolderA")
