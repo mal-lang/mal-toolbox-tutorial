@@ -10,9 +10,9 @@ category System {
         & access
             -> compromise
 	    | compromise
-            ->  folder.accessFolder
-            -> toComputer.connect
-            -> toComputer.crackPassword
+            -> folder.accessFolder,
+               toComputer.connect,
+               toComputer.crackPassword
     }
     asset Folder {
         | accessFolder
