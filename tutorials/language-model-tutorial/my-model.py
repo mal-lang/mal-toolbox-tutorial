@@ -40,7 +40,7 @@ def main():
 
     simulator = MalSimulator(graph)
     simulator.register_attacker(
-        "MyAttacker", entry_points=["ComputerA:connect"], goals=["FolderB:stealSecrets"]
+        "MyAttacker", entry_points=["ComputerA:access"], goals=["FolderB:stealSecrets"]
     )
     agents = [{"name": "MyAttacker", "agent": RandomAgent({})}]
     path = run_simulation(simulator, agents)
