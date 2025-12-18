@@ -15,7 +15,8 @@ For maltoolbox api docs, visit: https://mal-lang.org/mal-toolbox/
 
 Tutorials are step by step instructions that you can follow along with.
 
-- [Tutorial 1 - Create model and run simulations](tutorials/tutorial1/tutorial1.md)
+- [Tutorial 1 - Create model and run simulations](tutorials/model-tutorial/tutorial1.md)
+- [Tutorial 2 - Create language and model and simulator](tutorials/language-model-tutorial/tutorial2.md)
 
 ## Guides
 
