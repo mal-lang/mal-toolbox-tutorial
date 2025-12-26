@@ -161,7 +161,7 @@ When we run `python my-model.py` we will just see "Simulation over after 0 steps
 Replace the line `agents` with:
 
 ```python
-simulator.register_attacker("MyAttacker", entry_points=["ComputerA:connect"], goals=["FolderB:stealSecrets"])
+simulator.register_attacker("MyAttacker", entry_points=["ComputerA:access"], goals=["FolderB:stealSecrets"])
 agents =  [{'name': "MyAttacker", "agent": RandomAgent({})}]
 ```
 
