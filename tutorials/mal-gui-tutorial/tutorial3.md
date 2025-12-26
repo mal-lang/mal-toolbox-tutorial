@@ -1,5 +1,5 @@
 # Tutorial 3 - How to use the MAL GUI
-The mal-gui is a graphical user interface tool used to create MAL instance models and scenarios (with attacker agents specified). In this tutorial we will learn how to use it.
+The mal-gui is a graphical user interface tool used to create MAL instance models and scenarios (specifying attack agents). In this tutorial we will learn how to use it.
 
 ## Installation
 1. In your working directory, clone the mal-gui repository: `git clone https://github.com/mal-lang/mal-gui.git`.
@@ -31,3 +31,8 @@ The next step is to **add assets**. To do so, we can drag and drop new assets fr
 Then, we can **create associations** between assets. To do so, press SHIFT while you click on one of the assets, drag to the other asset, and let go. A window will pop up to choose the association type.
 
 ![alt text](image-1.png)
+
+## Define a scenario
+To define a scenario, we set an entry point for the attacker. We will choose the entry point used in the [tutorial](https://github.com/mal-lang/mal-toolbox-tutorial/tree/main/tutorials/language-model-tutorial) we have been using. To do so, drag and drop the `Attacker` asset from the left menu and create an association with `ComputerA` and choose `access`.
+
+![alt text](image-2.png)
