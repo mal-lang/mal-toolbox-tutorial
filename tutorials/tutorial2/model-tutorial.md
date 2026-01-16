@@ -28,9 +28,9 @@ Install requirements:
 - `pip install mal-toolbox`
 - `pip install mal-simulator`
 
-Create a python file in the directory called `simulate.py` with your text editor of choice.
+Create a python file in the directory called `tutorial2.py` with your text editor of choice.
 
-copy this code into `simulate.py`:
+copy this code into `tutorial2.py`:
 
 ```python
 
@@ -142,7 +142,7 @@ if __name__ == '__main__':
     main()
 ```
 
-Uncomment the line with 'render_model' and run the file with `python simulate.py` to see a [render](my-model.gv.pdf) of the model. This can be helpful to debug generated models.
+Uncomment the line with 'render_model' and run the file with `python tutorial2.py` to see a [render](my-model.gv.pdf) of the model. This can be helpful to debug generated models.
 
 Then try it with the other line (render_graph) to see a [render](my-attack-graph.gv.pdf) of the attack graph. This will not be very helpful, but gives a feel of the size of the graph.
 
@@ -171,7 +171,7 @@ path = run_simulation(simulator, agents)
 
 ```
 
-When we run `python simulate.py` now we will just see "Simulation over after 0 steps.". This is because we don't have any agents. Let us add an attacker agent.
+When we run `python tutorial2.py` now we will just see "Simulation over after 0 steps.". This is because we don't have any agents. Let us add an attacker agent.
 
 Replace the line `agents = {}` with:
 
@@ -182,7 +182,7 @@ Replace the line `agents = {}` with:
 
 This registers an attacker in the simulator, and creates a list of decision agents that can be used to take decisions for the simulator attacker.
 
-When we run `python simulate.py` now, we can see that the simulation runs until the attacker reaches `DataOnApp4:read`.
+When we run `python tutorial2.py` now, we can see that the simulation runs until the attacker reaches `DataOnApp4:read`.
 This tells us that there was a path from `App 1` to `DataOnApp4`.
 
 As we repeat the command, we can see that it reaches it on different iterations, since it is a random agent.
@@ -195,4 +195,4 @@ To make it more interesting, we can add TTCs to the simulations and use the TTCS
 
 We can also add a defender.
 
-See the finished script in [simulate.py](simulate.py).
+See the finished script in [tutorial2.py](tutorial2.py).

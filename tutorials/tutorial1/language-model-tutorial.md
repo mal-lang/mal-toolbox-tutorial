@@ -68,9 +68,9 @@ In the `associations` section we define the relationship assets have. In this ca
 Once we have the MALLang file, we can create a python file to create models from this language.
 
 ### Create and compile the model
-Create a .py file in the same directory called `my-model.py`.
+Create a .py file in the same directory called `tutorial1.py`.
 
-Copy this code into `my-model.py`:
+Copy this code into `tutorial1.py`:
 
 ```python
 import os
@@ -120,7 +120,7 @@ def main():
 if __name__ == "__main__":
     main()
 ```
-Change `lang_file` accordingly. Here we create the model using our own language. To compile it, run the script with `python my-model.py`.
+Change `lang_file` accordingly. Here we create the model using our own language. To compile it, run the script with `python tutorial1.py`.
 
 ### Create an attack graph
 To create an attack graph, we use the model and the MALLang. Add this import to the top of the file (below the other imports):
@@ -156,7 +156,7 @@ agents = {}
 path = run_simulation(simulator, agents)
 ```
 
-When we run `python my-model.py` we will just see "Simulation over after 0 steps.". This is because we don't have any agents. Let us add an attacker agent.
+When we run `python tutorial1.py` we will just see "Simulation over after 0 steps.". This is because we don't have any agents. Let us add an attacker agent.
 
 Replace the line `agents` with:
 
