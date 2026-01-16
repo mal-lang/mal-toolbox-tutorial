@@ -1,4 +1,4 @@
-# Tutorial 1 - Create model and run simulations
+# Tutorial 2 - Create model and run simulations
 
 In this tutorial you will learn how to load a language, create a model and run simulations on the generated attack graph.
 
