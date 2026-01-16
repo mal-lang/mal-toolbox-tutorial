@@ -1,4 +1,4 @@
-# Tutorial 2 - Create a language and a model
+# Tutorial 1 - Create a language and a model
 In this tutorial, you will learn how to build a simple MAL language and create a model from it.
 
 ## Step by step
