@@ -4,7 +4,7 @@ from maltoolbox.language import LanguageGraph
 from maltoolbox.attackgraph import AttackGraph
 from malsim import MalSimulator, run_simulation
 from malsim.policies import RandomAgent
-from malsim.config.agent_settings import AttackerSettings
+from malsim import MalSimulator, run_simulation, AttackerSettings
 
 
 def create_model(lang_graph: LanguageGraph) -> Model:

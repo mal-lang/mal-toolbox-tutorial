@@ -142,8 +142,7 @@ The attack graph is a representation of the model that folds out all of the atta
 To run simulations, add these imports to the top of the file (below the other imports):
 
 ```python
-from malsim import MalSimulator, run_simulation
-from malsim.config.agent_settings import AttackerSettings
+from malsim import MalSimulator, run_simulation, AttackerSettings
 from malsim.policies import RandomAgent
 ```
 

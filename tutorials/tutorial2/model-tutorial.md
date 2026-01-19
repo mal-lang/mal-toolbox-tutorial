@@ -155,8 +155,8 @@ Instead, we will use the `mal-simulator` to run simulations with different agent
 To run simulations, add these imports to the top of the file (below the other imports):
 
 ```python
-from malsim.mal_simulator import MalSimulator, MalSimulatorSettings, run_simulation, TTCMode
-from malsim.config.agent_settings import AttackerSettings, DefenderSettings
+from malsim.mal_simulator import MalSimulator, run_simulation
+from malsim.config import AttackerSettings, DefenderSettings, MalSimulatorSettings, TTCMode
 from malsim.policies import RandomAgent, TTCSoftMinAttacker
 ```
 

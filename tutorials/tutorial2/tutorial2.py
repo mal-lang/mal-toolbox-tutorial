@@ -6,8 +6,14 @@ from maltoolbox.attackgraph import AttackGraph
 
 from maltoolbox.visualization.graphviz_utils import render_model, render_attack_graph
 
-from malsim.mal_simulator import MalSimulator, MalSimulatorSettings, run_simulation, TTCMode
-from malsim.config.agent_settings import AttackerSettings, DefenderSettings
+from malsim import MalSimulator, run_simulation
+from malsim.config import (
+    MalSimulatorSettings,
+    AttackerSettings,
+    DefenderSettings,
+    TTCMode
+)
+
 from malsim.policies import RandomAgent, TTCSoftMinAttacker
 
 def connect_net_to_net(model: Model, net1: ModelAsset, net2: ModelAsset):
