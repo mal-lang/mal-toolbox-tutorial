@@ -155,8 +155,9 @@ Instead, we will use the `mal-simulator` to run simulations with different agent
 To run simulations, add these imports to the top of the file (below the other imports):
 
 ```python
-from malsim import MalSimulator, run_simulation
-from malsim.agents import RandomAgent
+from malsim.mal_simulator import MalSimulator, MalSimulatorSettings, run_simulation, TTCMode
+from malsim.config.agent_settings import AttackerSettings, DefenderSettings
+from malsim.policies import RandomAgent, TTCSoftMinAttacker
 ```
 
 Now we can create a MalSimulator from the attack graph and run simulations.
@@ -166,33 +167,52 @@ Add this to the end of the `main` function:
 ```python
 
 simulator = MalSimulator(graph)
-agents = {}
 path = run_simulation(simulator, agents)
 
 ```
 
 When we run `python tutorial2.py` now we will just see "Simulation over after 0 steps.". This is because we don't have any agents. Let us add an attacker agent.
 
-Replace the line `agents = {}` with:
+Replace the above code with:
 
 ```python
-    simulator.register_attacker("MyAttacker", entry_points=["App 1:fullAccess"], goals=["DataOnApp4:read"])
-    agents =  [{'name': "MyAttacker", "agent": RandomAgent({})}]
+    simulator = MalSimulator(
+        graph,
+        sim_settings=MalSimulatorSettings(
+            ttc_mode=TTCMode.PRE_SAMPLE
+        )
+    )
+
+    attacker_name = "MyAttacker"
+    defender_name = "MyDefender"
+    agents = {
+        attacker_name: AttackerSettings(
+            attacker_name,
+            entry_points={"App 1:fullAccess"},
+            goals={'DataOnApp4:read'},
+            policy=TTCSoftMinAttacker,
+        ),
+        defender_name: DefenderSettings(
+            defender_name,
+            policy=RandomAgent,
+        )
+    }
+    # Register agents
+    simulator.register_attacker_settings(agents[attacker_name])
+    simulator.register_defender_settings(agents[defender_name])
+
+    paths = run_simulation(simulator, agents)
+    attacker_path = paths[attacker_name]
 ```
 
-This registers an attacker in the simulator, and creates a list of decision agents that can be used to take decisions for the simulator attacker.
+This creates a dict of agents that are used for registering agents and running policies with `run_simulation`. The attacker agent uses a policy which tries to take the easiest node (low TTC) every step.
 
-When we run `python tutorial2.py` now, we can see that the simulation runs until the attacker reaches `DataOnApp4:read`.
-This tells us that there was a path from `App 1` to `DataOnApp4`.
+When we run `python tutorial2.py` now, we can see that the simulation runs until the attacker reaches `DataOnApp4:read`. This tells us that there was a path from `App 1` to `DataOnApp4`.
 
 As we repeat the command, we can see that it reaches it on different iterations, since it is a random agent.
 
-Try this out with different agents in `malsim.agents`.
+Try this out with different policies in `malsim.policies`.
 
 `run_simulation` will return the path taken by each agent.
-
-To make it more interesting, we can add TTCs to the simulations and use the TTCSoftMinAttacker policy for our attacker.
-
-We can also add a defender.
 
 See the finished script in [tutorial2.py](tutorial2.py).
