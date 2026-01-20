@@ -9,7 +9,7 @@ A language to create cyber threat modeling systems for specific domains.
 
 Read more about MAL at: https://mal-lang.org
 
-For maltoolbox api docs, visit: https://mal-lang.org/mal-toolbox/
+For mal-toolbox api docs, visit: https://github.com/mal-lang/mal-toolbox/wiki
 
 ## Tutorials
 
