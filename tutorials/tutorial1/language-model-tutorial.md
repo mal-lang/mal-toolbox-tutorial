@@ -87,15 +87,15 @@ def create_model(lang_graph: LanguageGraph) -> Model:
     comp_b = model.add_asset("Computer", "ComputerB")
 
     # Connection between computers
-    comp_a.add_associated_assets("toComputer", [comp_b])
+    comp_a.add_associated_assets("toComputer", {comp_b})
 
     # Two folders
     folder1 = model.add_asset("Folder", "FolderA")
     folder2 = model.add_asset("Folder", "FolderB")
 
     # Connect the folders to the computers
-    comp_b.add_associated_assets("folder", [folder2])
-    comp_a.add_associated_assets("folder", [folder1])
+    comp_b.add_associated_assets("folder", {folder2})
+    comp_a.add_associated_assets("folder", {folder1})
 
     return model
 ```
@@ -157,7 +157,7 @@ path = run_simulation(simulator, {})
 
 When we run `python tutorial1.py` we will just see "Simulation over after 0 steps.". This is because we don't have any agents. Let us add an attacker agent.
 
-Replace the previous code with:
+To do so, replace the previous code (2 lines) with:
 
 ```python
     agent_settings = AttackerSettings(
