@@ -142,8 +142,8 @@ The attack graph is a representation of the model that folds out all of the atta
 To run simulations, add these imports to the top of the file (below the other imports):
 
 ```python
-from malsim import MalSimulator, run_simulation
-from malsim.agents import RandomAgent
+from malsim import MalSimulator, run_simulation, AttackerSettings
+from malsim.policies import RandomAgent
 ```
 
 Now we can create a MalSimulator from the attack graph `graph` and run simulations.
@@ -152,17 +152,23 @@ Add this to the end of the `main` function:
 
 ```python
 simulator = MalSimulator(graph)
-agents = {}
-path = run_simulation(simulator, agents)
+path = run_simulation(simulator, {})
 ```
 
 When we run `python tutorial1.py` we will just see "Simulation over after 0 steps.". This is because we don't have any agents. Let us add an attacker agent.
 
-Replace the line `agents` with:
+Replace the previous code with:
 
 ```python
-simulator.register_attacker("MyAttacker", entry_points=["ComputerA:connect"], goals=["FolderB:stealSecrets"])
-agents =  [{'name': "MyAttacker", "agent": RandomAgent({})}]
+    agent_settings = AttackerSettings(
+        "MyAttacker",
+        entry_points={"ComputerA:access"},
+        goals={"FolderB:stealSecrets"},
+        policy=RandomAgent
+    )
+    simulator = MalSimulator(graph)
+    simulator.register_attacker_settings(agent_settings)
+    path = run_simulation(simulator, {'MyAttacker': agent_settings})
 ```
 
-This registers an attacker in the simulator, and creates a list of decision agents that can be used to take decisions for the simulator attacker.
+This registers an attacker in the simulator, gives a dict of agents to `run_simulation` which will use the policy set in the AttackerSettings object.
