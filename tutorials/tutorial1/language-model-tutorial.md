@@ -3,7 +3,7 @@ In this tutorial, you will learn how to build a simple MAL language and create a
 
 ## Step by step
 ### Environment set-up
-Create a directory for the tutorial and set it as your working directory: `mkdir mal-tutorial2 && cd mal-tutorial2`
+Create a directory for the tutorial and set it as your working directory: `mkdir mal-tutorial1 && cd mal-tutorial1`
 Create a Python virtual environment and activate it.
 - On Linux-based operating systems:
 ```
