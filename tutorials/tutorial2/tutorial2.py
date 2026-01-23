@@ -3,7 +3,6 @@ import os
 from maltoolbox.language import LanguageGraph
 from maltoolbox.model import Model, ModelAsset
 from maltoolbox.attackgraph import AttackGraph
-
 from maltoolbox.visualization.graphviz_utils import render_model, render_attack_graph
 
 from malsim import MalSimulator, run_simulation
@@ -11,10 +10,11 @@ from malsim.config import (
     MalSimulatorSettings,
     AttackerSettings,
     DefenderSettings,
-    TTCMode
+    TTCMode,
 )
 
 from malsim.policies import RandomAgent, TTCSoftMinAttacker
+
 
 def connect_net_to_net(model: Model, net1: ModelAsset, net2: ModelAsset):
     """
@@ -69,7 +69,9 @@ def add_user_to_app(model: Model, app: ModelAsset, data_asset_name: str) -> Mode
     return user_asset
 
 
-def add_creds_to_user(model: Model, identity: ModelAsset, data_asset_name: str) -> ModelAsset:
+def add_creds_to_user(
+    model: Model, identity: ModelAsset, data_asset_name: str
+) -> ModelAsset:
     """
     Add a credentials asset and association from `identity` to the credentials.
     return the credentials asset.
@@ -80,12 +82,13 @@ def add_creds_to_user(model: Model, identity: ModelAsset, data_asset_name: str) 
 
 
 def create_model(lang_graph: LanguageGraph) -> Model:
-    """Create a model with 4 apps"""
+    # Create a model with 4 apps
     model = Model("my-model", lang_graph)
 
     # Two networks
     net_a = model.add_asset("Network", "NetworkA")
     net_b = model.add_asset("Network", "NetworkB")
+
     # Connection between networks
     connect_net_to_net(model, net_a, net_b)
 
@@ -130,10 +133,7 @@ def main():
     # render_attack_graph(graph) # Uncomment to render graphviz pdf
 
     simulator = MalSimulator(
-        graph,
-        sim_settings=MalSimulatorSettings(
-            ttc_mode=TTCMode.PRE_SAMPLE
-        )
+        graph, sim_settings=MalSimulatorSettings(ttc_mode=TTCMode.PRE_SAMPLE)
     )
 
     attacker_name = "MyAttacker"
@@ -142,13 +142,13 @@ def main():
         attacker_name: AttackerSettings(
             attacker_name,
             entry_points={"App 1:fullAccess"},
-            goals={'DataOnApp4:read'},
+            goals={"DataOnApp4:read"},
             policy=TTCSoftMinAttacker,
         ),
         defender_name: DefenderSettings(
             defender_name,
             policy=RandomAgent,
-        )
+        ),
     }
     # Register agents
     simulator.register_attacker_settings(agents[attacker_name])
@@ -158,5 +158,5 @@ def main():
     attacker_path = paths[attacker_name]
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

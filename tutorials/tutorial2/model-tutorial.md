@@ -30,7 +30,7 @@ Install requirements:
 
 Create a python file in the directory called `tutorial2.py` with your text editor of choice.
 
-copy this code into `tutorial2.py`:
+Copy this piece of code into `tutorial2.py`:
 
 ```python
 
@@ -79,28 +79,33 @@ def add_data_to_app(model: Model, app: ModelAsset):
     Add a data asset and association from `app` to the data.
     reutrn the data asset.
     """
-    asset_name = f"Data on {app.name}"
-    data_asset = model.add_asset("Data", asset_name)
-    data_asset.add_associated_assets("containingApp", [app])
+    data_asset = model.add_asset("Data", data_asset_name)
+    data_asset.add_associated_assets("containingApp", {app})
     return data_asset
-
-
 ```
 
-These helper functions are made to work with the MAL language TyrLang, association fieldnames and asset types are specific per language.
+These helper functions are made to work with the MAL language TyrLang, association fieldnames and asset types are specific per language. Therefore, they would need to be adapted depending on the MAL language in use.
 
 Each function creates assets in a model and connects the assets to other assets using associations (associatoin fieldnames to be more exact).
 
-Lets create a model and use the helper methods. Add this to the end of the file:
+Let's create a model and use the helper methods. First, add these imports to the others at the beginning of the python file:
+
+```python
+from maltoolbox.attackgraph import AttackGraph
+from maltoolbox.visualization.graphviz_utils import render_model, render_attack_graph
+```
+
+Then, add this to the end of the file:
 
 ```python
 def create_model(lang_graph: LanguageGraph) -> Model:
-    """Create a model with 4 apps"""
+    # Create a model with 4 apps
     model = Model("my-model", lang_graph)
 
     # Two networks
     net_a = model.add_asset("Network", "NetworkA")
     net_b = model.add_asset("Network", "NetworkB")
+
     # Connection between networks
     connect_net_to_net(model, net_a, net_b)
 
