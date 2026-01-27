@@ -5,16 +5,9 @@ from maltoolbox.model import Model, ModelAsset
 from maltoolbox.attackgraph import AttackGraph
 from maltoolbox.visualization.graphviz_utils import render_model, render_attack_graph
 
-from malsim import MalSimulator, run_simulation
-from malsim.config import (
-    MalSimulatorSettings,
-    AttackerSettings,
-    DefenderSettings,
-    TTCMode,
-)
-
-from malsim.policies import RandomAgent, TTCSoftMinAttacker
-
+from malsim.mal_simulator import MalSimulator, run_simulation
+from malsim.config import AttackerSettings, DefenderSettings, MalSimulatorSettings, TTCMode
+from malsim.policies import RandomAgent, TTCSoftMinAttacker, PassiveAgent
 
 def connect_net_to_net(model: Model, net1: ModelAsset, net2: ModelAsset):
     """
@@ -131,31 +124,28 @@ def main():
 
     # render_model(model) # Uncomment to render graphviz pdf
     # render_attack_graph(graph) # Uncomment to render graphviz pdf
-
-    simulator = MalSimulator(
-        graph, sim_settings=MalSimulatorSettings(ttc_mode=TTCMode.PRE_SAMPLE)
-    )
-
-    attacker_name = "MyAttacker"
-    defender_name = "MyDefender"
-    agents = {
-        attacker_name: AttackerSettings(
-            attacker_name,
+    agent_settings = {
+        "MyAttacker": AttackerSettings(
+            "MyAttacker",
             entry_points={"App 1:fullAccess"},
             goals={"DataOnApp4:read"},
             policy=TTCSoftMinAttacker,
         ),
-        defender_name: DefenderSettings(
-            defender_name,
-            policy=RandomAgent,
-        ),
+        "MyDefender": DefenderSettings(
+            "MyDefender",
+            policy=PassiveAgent,
+        )
     }
-    # Register agents
-    simulator.register_attacker_settings(agents[attacker_name])
-    simulator.register_defender_settings(agents[defender_name])
-
-    paths = run_simulation(simulator, agents)
-    attacker_path = paths[attacker_name]
+    simulator = MalSimulator(
+        graph,
+        agent_settings=agent_settings,
+        sim_settings=MalSimulatorSettings(
+            ttc_mode=TTCMode.PRE_SAMPLE
+        )
+    )
+    run_simulation(simulator, agent_settings)
+    import pprint
+    pprint.pprint(simulator.recording)
 
 
 if __name__ == "__main__":
