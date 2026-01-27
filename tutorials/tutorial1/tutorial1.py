@@ -2,9 +2,9 @@ import os
 from maltoolbox.model import Model
 from maltoolbox.language import LanguageGraph
 from maltoolbox.attackgraph import AttackGraph
-from malsim import MalSimulator, run_simulation
-from malsim.policies import RandomAgent
 from malsim import MalSimulator, run_simulation, AttackerSettings
+from malsim.types import AgentSettings
+from malsim.policies import RandomAgent
 
 
 def create_model(lang_graph: LanguageGraph) -> Model:
@@ -38,17 +38,19 @@ def main():
     model = create_model(my_language)
     graph = AttackGraph(my_language, model)
 
-    # Register the agent
-    agent_settings = AttackerSettings(
-        "MyAttacker",
-        entry_points={"ComputerA:access"},
-        goals={"FolderB:stealSecrets"},
-        policy=RandomAgent
-    )
-
-    simulator = MalSimulator(graph)
-    simulator.register_attacker_settings(agent_settings)
-    path = run_simulation(simulator, {'MyAttacker': agent_settings})
+    # Create agent settings
+    agent_settings: AgentSettings = {
+        "MyAttacker": AttackerSettings(
+            "MyAttacker",
+            entry_points={"ComputerA:access"},
+            goals={"FolderB:stealSecrets"},
+            policy=RandomAgent
+        )
+    }
+    simulator = MalSimulator(graph, agent_settings=agent_settings)
+    run_simulation(simulator, agent_settings)
+    import pprint
+    pprint.pprint(simulator.recording)
 
 
 if __name__ == "__main__":
