@@ -143,6 +143,7 @@ To run simulations, add these imports to the top of the file (below the other im
 
 ```python
 from malsim import MalSimulator, run_simulation, AttackerSettings
+from malsim.types import AgentSettings
 from malsim.policies import RandomAgent
 ```
 
@@ -160,15 +161,21 @@ When we run `python tutorial1.py` we will just see "Simulation over after 0 step
 To do so, replace the previous code (2 lines) with:
 
 ```python
-    agent_settings = AttackerSettings(
-        "MyAttacker",
-        entry_points={"ComputerA:access"},
-        goals={"FolderB:stealSecrets"},
-        policy=RandomAgent
-    )
-    simulator = MalSimulator(graph)
-    simulator.register_attacker_settings(agent_settings)
-    path = run_simulation(simulator, {'MyAttacker': agent_settings})
+    # Create agent settings
+    agent_settings: AgentSettings = {
+        "MyAttacker": AttackerSettings(
+            "MyAttacker",
+            entry_points={"ComputerA:access"},
+            goals={"FolderB:stealSecrets"},
+            policy=RandomAgent
+        )
+    }
+    simulator = MalSimulator(graph, agent_settings=agent_settings)
+    run_simulation(simulator, agent_settings)
+
+    import pprint
+    pprint.pprint(simulator.recording)
+
 ```
 
-This registers an attacker in the simulator, gives a dict of agents to `run_simulation` which will use the policy set in the AttackerSettings object.
+This registers an attacker in the simulator, gives a dict of agents to `run_simulation` which will use the policy set in the AttackerSettings object. We then print the recording of the simulation.
