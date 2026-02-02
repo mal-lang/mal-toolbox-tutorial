@@ -1,5 +1,5 @@
 # Tutorial 1 - Create a language and a model
-In this tutorial, you will learn how to build a simple MAL language and create a model from it.
+In this tutorial, you will learn how to build a simple MAL language, create a model from it and run simulations.
 
 ## Step by step
 ### Environment set-up
@@ -39,9 +39,9 @@ category System {
         & access
             -> compromise
 	    | compromise
-            ->  folder.accessFolder
-            -> toComputer.connect
-            -> toComputer.crackPassword
+            -> folder.accessFolder,
+               toComputer.connect,
+               toComputer.crackPassword
     }
     asset Folder {
         | accessFolder
@@ -65,9 +65,9 @@ This piece of code defines a simple MALLang. We define a category called System 
 
 In the `associations` section we define the relationship assets have. In this case, `Computer` and `Folder` have an N to M relationship, represented by the `*`.
 
-Once we have the MALLang file, we can create a python file to create models from this language.
+Once we have the MALLang file, we can create a python file to create models from this language. To get a deeper insight into the MAL languages syntaxis, [visit the MAL Documentation repository](https://github.com/mal-lang/mal-documentation/wiki/1.-MAL-Syntax)
 
-### Create and compile the model
+### Create a model
 Create a .py file in the same directory called `tutorial1.py`.
 
 Copy this code into `tutorial1.py`:
@@ -104,7 +104,7 @@ In this simple function, we create:
 - A connection between `ComputerA` and `ComputerB`. The string `"computer2"` comes from the `ComputerConnection` association in the MAL language we created. 
 - Two connections between the computer and folder instances. The strings `"folder"` come from the `ComputerFolderConnection` association.
 
-Now we can instantiate the model and compile. Add this to the end of the file:
+Now we can instantiate the model. Add this to the end of the file:
 
 ```python
 def main():
@@ -120,7 +120,7 @@ def main():
 if __name__ == "__main__":
     main()
 ```
-Change `lang_file` accordingly. Here we create the model using our own language. To compile it, run the script with `python tutorial1.py`.
+Change `lang_file` accordingly. Here we create the model using our own language. To do so, run the script with `python tutorial1.py`.
 
 ### Create an attack graph
 To create an attack graph, we use the model and the MALLang. Add this import to the top of the file (below the other imports):
@@ -147,7 +147,7 @@ from malsim.types import AgentSettings
 from malsim.policies import RandomAgent
 ```
 
-Now we can create a MalSimulator from the attack graph `graph` and run simulations.
+Now we can create a MalSimulator object from the attack graph `graph` and run simulations.
 
 Add this to the end of the `main` function:
 

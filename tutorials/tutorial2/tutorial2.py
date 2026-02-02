@@ -3,7 +3,6 @@ import os
 from maltoolbox.language import LanguageGraph
 from maltoolbox.model import Model, ModelAsset
 from maltoolbox.attackgraph import AttackGraph
-
 from maltoolbox.visualization.graphviz_utils import render_model, render_attack_graph
 
 from malsim.mal_simulator import MalSimulator, run_simulation
@@ -63,7 +62,9 @@ def add_user_to_app(model: Model, app: ModelAsset, data_asset_name: str) -> Mode
     return user_asset
 
 
-def add_creds_to_user(model: Model, identity: ModelAsset, data_asset_name: str) -> ModelAsset:
+def add_creds_to_user(
+    model: Model, identity: ModelAsset, data_asset_name: str
+) -> ModelAsset:
     """
     Add a credentials asset and association from `identity` to the credentials.
     return the credentials asset.
@@ -74,12 +75,13 @@ def add_creds_to_user(model: Model, identity: ModelAsset, data_asset_name: str) 
 
 
 def create_model(lang_graph: LanguageGraph) -> Model:
-    """Create a model with 4 apps"""
+    # Create a model with 4 apps
     model = Model("my-model", lang_graph)
 
     # Two networks
     net_a = model.add_asset("Network", "NetworkA")
     net_b = model.add_asset("Network", "NetworkB")
+
     # Connection between networks
     connect_net_to_net(model, net_a, net_b)
 
@@ -126,7 +128,7 @@ def main():
         "MyAttacker": AttackerSettings(
             "MyAttacker",
             entry_points={"App 1:fullAccess"},
-            goals={'DataOnApp4:read'},
+            goals={"DataOnApp4:read"},
             policy=TTCSoftMinAttacker,
         ),
         "MyDefender": DefenderSettings(
@@ -146,5 +148,5 @@ def main():
     pprint.pprint(simulator.recording)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
