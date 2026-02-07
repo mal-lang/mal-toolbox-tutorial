@@ -2,14 +2,21 @@
 
 In this tutorial we learn how to use the dedicated Graphifal User Interface for the MAL Sim tool. Before starting this tutorial, it is advisable to complete tutorials [1](https://github.com/mal-lang/mal-toolbox-tutorial/blob/main/tutorials/tutorial1/language-model-tutorial.md) and [2](https://github.com/mal-lang/mal-toolbox-tutorial/blob/main/tutorials/tutorial2/model-tutorial.md) on working with MAL languages, models, and simulations.
 
-## Running MAL-Sim-GUI
+## Starting MAL-Sim-GUI
 
 The most user-friendly way to run the GUI is via Docker. If you would like to run it without using Docker, you might find more information about this How-To, next to more information about this GUI-tool, in the MAL-Sim-GUI dedicated repository: [Link to Repo](https://github.com/mal-lang/malsim-gui)
 
 To proceed with Docker:
 
-- Install docker on your system. You will find more info at the [Docker Website](https://www.docker.com/)
-- Open your terminal and run `docker run -p 8888:8888 mrkickling/malsim-gui:0.0.0`. This will automate the downloading of the docker and its launching
+- Download and install docker on your system. You will find more info at the [Docker Website](https://www.docker.com/).
+- Launch your Docker platform on your machine, open your terminal and run `docker run -p 8888:8888 mrkickling/malsim-gui:0.0.0`. This will automate the downloading of the docker and its launching.
+
+<img width="1920" height="500" alt="MALSIM_GUI_DockerLaunching" src="https://github.com/user-attachments/assets/104d3d2a-278c-4385-8da8-fbfaa36732a2" />
+
 - Once the Docker is running, you might access the GUI via your browser by opening (http://localhost:8888). At this point, you should be able to see the main view of the GUI:
 
 <img width="1920" height="880" alt="MALSIM_GUI_1" src="MALSIM_GUI_InitialView.png" />
+
+## Running a Simulation
+
+<TO DO>
