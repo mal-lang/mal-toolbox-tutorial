@@ -17,7 +17,8 @@ Tutorials are step by step instructions that you can follow along with.
 
 - [Tutorial 1 - Create language and model, and use the simulator](tutorials/tutorial1/language-model-tutorial.md)
 - [Tutorial 2 - Create model and run simulations](tutorials/tutorial2/model-tutorial.md)
-- [Tutorial 3 - Represent simple model in mal-gui](tutorials/tutorial3/mal-gui-tutorial.md)
+- [Tutorial 3 - Represent simple model in MAL-GUI](tutorials/tutorial3/mal-gui-tutorial.md)
+- [Tutorial 4 - Run a simulation in MAL-Sim-GUI](tutorials/tutorial4/MAL-Sim-GUI-Tutorial.md)
 
 ## Guides
 
