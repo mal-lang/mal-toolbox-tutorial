@@ -26,6 +26,6 @@ To run a simulation, we might just follow the steps described in [Tutorial #1](t
 
 - As an alternative, if you run the simulations from the command line, you will need to use the -g flag.
 
-Regardless of the method chosen to run the simulation, you will need to reaload the browser once you have run the simulation. Then, the data related to it should be visible in the browser. 
+Regardless of the method chosen to run the simulation, you will need to reaload the browser once you have run the simulation. Then, the data related to the simulation should be visible in the browser. 
 
 <img width="1920" height="880" alt="MALSIM_GUI_simulation" src="MALSIM_GUI_simulation.png" />
