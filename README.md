@@ -36,7 +36,9 @@ More documentation on MAL syntax: https://github.com/mal-lang/mal-documentation/
 
 ### Compiling a MAL-language (LEGACY)
 
-Compilation of MAL-languages is now deprecated and no longer supported. However, if desired, information about this process might be found in the following link 
+Compilation of MAL-languages is now deprecated and no longer supported. We recommend to load .mal-files directly into the MAL-Toolbox.
+
+However, if desired, information about this process might be found in the following link 
 
 [Guide on how to compile a MAL language](guides/compile_language.md).
 
