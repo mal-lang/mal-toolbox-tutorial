@@ -2,20 +2,21 @@
 The mal-gui is a graphical user interface tool used to create MAL instance models and scenarios (specifying attack agents). In this tutorial we will learn how to use it.
 
 ## Installation
-1. In your working directory, clone the mal-gui repository: `git clone https://github.com/mal-lang/mal-gui.git`.
-2. Create a virtual environment and activate it.
-    - On Linux-based operating systems:
-    ```
-    python -m venv venv
-    source venv/bin/activate
-    ```
-    - On Windows:
-    ```
-    python -m venv venv
-    .\venv\Scripts\activate
-    ```
+1. In your working directory, create a virtual environment and activate it.
+> [!NOTE]
+> Currently, mal-gui uses version 1.x of NumPy, therefore, Python <= 3.12 is needed
+- On Linux-based operating systems:
+```
+python -m venv venv
+source venv/bin/activate
+```
+- On Windows:
+```
+python -m venv venv
+.\venv\Scripts\activate
+```
 3. Install the mal-gui package: `pip install mal-gui`. This will automatically install `mal-toolbox` and `mal-simulator`.
-4. Run the GUI: `malgui`
+4. Run the following command to open the app: `malgui`
 
 ## Loading a language and creating the model
 When we first run the GUI, we get the following Window:
