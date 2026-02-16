@@ -4,7 +4,7 @@ The mal-gui is a graphical user interface tool used to create MAL instance model
 ## Installation
 1. In your working directory, create a virtual environment and activate it.
 > [!NOTE]
-> Currently, mal-gui uses version 1.x of NumPy, therefore, Python <= 3.12 is needed
+> Currently, mal-gui uses version 1.x of NumPy, therefore, Python <= 3.12 is needed.
 - On Linux-based operating systems:
 ```
 python -m venv venv
