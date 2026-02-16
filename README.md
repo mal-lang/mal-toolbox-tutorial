@@ -15,8 +15,8 @@ For mal-toolbox api docs, visit: https://github.com/mal-lang/mal-toolbox/wiki
 
 Tutorials are step by step instructions that you can follow along with.
 
-- [Tutorial 1 - Create language and model and simulator](tutorials/tutorial1/language-model-tutorial.md)
-- [Tutorial 2 - Create model and run simulations](tutorials/tutorial2/model-tutorial.md)
+- [Tutorial 1 - Create a MAL-Language, crate a model and run simulations](tutorials/tutorial1/language-model-tutorial.md)
+- [Tutorial 2 - Load a MAL-Language, create a model and run simulations](tutorials/tutorial2/model-tutorial.md)
 
 ## Guides
 
@@ -34,10 +34,11 @@ Each MAL language consists of assets with defense steps, attack steps and associ
 
 More documentation on MAL syntax: https://github.com/mal-lang/mal-documentation/wiki/MAL-Code-Examples.
 
-### Compiling a language
+### Compiling a MAL-language (LEGACY)
+
+Compilation of MAL-languages is now deprecated and no longer supported. However, if desired, information about this process might be found in the following link 
 
 [Guide on how to compile a MAL language](guides/compile_language.md).
-
 
 ### Create a MAL model using your language
 
