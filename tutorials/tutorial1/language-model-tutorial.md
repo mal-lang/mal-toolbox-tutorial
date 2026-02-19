@@ -1,9 +1,9 @@
-# Tutorial 2 - Create a language and a model
-In this tutorial, you will learn how to build a simple MAL language and create a model from it.
+# Tutorial 1 - Create a language and a model
+In this tutorial, you will learn how to build a simple MAL language, create a model from it and run simulations.
 
 ## Step by step
-### Environment set-up
-Create a directory for the tutorial and set it as your working directory: `mkdir mal-tutorial2 && cd mal-tutorial2`
+### Environment Set-up
+Create a directory for the tutorial and set it as your working directory: `mkdir mal-tutorial1 && cd mal-tutorial1`
 Create a Python virtual environment and activate it.
 - On Linux-based operating systems:
 ```
@@ -21,10 +21,8 @@ pip install mal-toolbox
 pip install mal-simulator
 ```
 
-### MAL language creation
-Create a MAL file in the same directory called `my-language.mal`.
-
-Copy this code into `my-language.mal`:
+### Definition of a MAL Language
+To define a MAL-Language or ***MAL-Lang***, create a file in the same directory called `my-language.mal` and copy the following code into it:
 
 ```
 #id: "org.mal-lang.my-language"
@@ -39,9 +37,9 @@ category System {
         & access
             -> compromise
 	    | compromise
-            ->  folder.accessFolder
-            -> toComputer.connect
-            -> toComputer.crackPassword
+            -> folder.accessFolder,
+               toComputer.connect,
+               toComputer.crackPassword
     }
     asset Folder {
         | accessFolder
@@ -56,7 +54,7 @@ associations {
 }
 ```
 
-This piece of code defines a simple MALLang. We define a category called System that holds two assets:
+This piece of code defines a simple example of MAL-Language. We define a category called System that holds two assets:
 - Computer
     - If steps `connect` and `crackPassword` happen, then `access` would be triggered, which at the same time would trigger `compromise`.
     - If `compromise` is activated, we would move to the step `accessFolder` in asset `Folder`.
@@ -65,12 +63,12 @@ This piece of code defines a simple MALLang. We define a category called System 
 
 In the `associations` section we define the relationship assets have. In this case, `Computer` and `Folder` have an N to M relationship, represented by the `*`.
 
-Once we have the MALLang file, we can create a python file to create models from this language.
+Once we have the MAL-Lang file, we can create a python script to automate the creation of *Language Graphs* and *Models* based on this MAL-language. To get a deeper insight into the **MAL languages syntaxis**, [visit the MAL Documentation repository](https://github.com/mal-lang/mal-documentation/wiki/1.-MAL-Syntax)
 
-### Create and compile the model
-Create a .py file in the same directory called `my-model.py`.
+### Creation of Models and Language Graphs
+Create a .py file in the same directory called `tutorial1.py`.
 
-Copy this code into `my-model.py`:
+Copy this code into `tutorial1.py`:
 
 ```python
 import os
@@ -87,15 +85,15 @@ def create_model(lang_graph: LanguageGraph) -> Model:
     comp_b = model.add_asset("Computer", "ComputerB")
 
     # Connection between computers
-    comp_a.add_associated_assets("toComputer", [comp_b])
+    comp_a.add_associated_assets("toComputer", {comp_b})
 
     # Two folders
     folder1 = model.add_asset("Folder", "FolderA")
     folder2 = model.add_asset("Folder", "FolderB")
 
     # Connect the folders to the computers
-    comp_b.add_associated_assets("folder", [folder2])
-    comp_a.add_associated_assets("folder", [folder1])
+    comp_b.add_associated_assets("folder", {folder2})
+    comp_a.add_associated_assets("folder", {folder1})
 
     return model
 ```
@@ -104,7 +102,7 @@ In this simple function, we create:
 - A connection between `ComputerA` and `ComputerB`. The string `"computer2"` comes from the `ComputerConnection` association in the MAL language we created. 
 - Two connections between the computer and folder instances. The strings `"folder"` come from the `ComputerFolderConnection` association.
 
-Now we can instantiate the model and compile. Add this to the end of the file:
+Now we can instantiate the model. Add this to the end of the file:
 
 ```python
 def main():
@@ -120,10 +118,10 @@ def main():
 if __name__ == "__main__":
     main()
 ```
-Change `lang_file` accordingly. Here we create the model using our own language. To compile it, run the script with `python my-model.py`.
+By executing this code, we create a model using a language graph, which in turn has been defined using our MAL-Lang "my-language.mal" (*my-language.mal* --> *LanguageGraph* --> *model*) . To do so, run the script with `python tutorial1.py`.
 
-### Create an attack graph
-To create an attack graph, we use the model and the MALLang. Add this import to the top of the file (below the other imports):
+### Create an Attack Graph
+To create an attack graph, we use the model and the MAL-Lang. Add this import to the top of the file (below the other imports):
 
 ```python
 from maltoolbox.attackgraph import AttackGraph
@@ -138,31 +136,45 @@ graph = AttackGraph(my_language, model)
 
 The attack graph is a representation of the model that folds out all of the attack steps defined in the MAL language. This can be used to run analysis or simulations.
 
+If you would like to know more about the concepts ***LanguageGraph***, ***Model*** or ***AttackGraph***, [visit this Wiki](https://github.com/mal-lang/mal-toolbox/wiki/MAL-Toolbox-concepts)
+
 ### Run simulation
 To run simulations, add these imports to the top of the file (below the other imports):
 
 ```python
-from malsim import MalSimulator, run_simulation
-from malsim.agents import RandomAgent
+from malsim import MalSimulator, run_simulation, AttackerSettings
+from malsim.types import AgentSettings
+from malsim.policies import RandomAgent
 ```
 
-Now we can create a MalSimulator from the attack graph `graph` and run simulations.
+Now we can create a MalSimulator object from the attack graph `graph` and run simulations.
 
 Add this to the end of the `main` function:
 
 ```python
 simulator = MalSimulator(graph)
-agents = {}
-path = run_simulation(simulator, agents)
+path = run_simulation(simulator, {})
 ```
 
-When we run `python my-model.py` we will just see "Simulation over after 0 steps.". This is because we don't have any agents. Let us add an attacker agent.
+When we run `python tutorial1.py` we will just see "Simulation over after 0 steps.". This is because we don't have any agents. Let us add an attacker agent.
 
-Replace the line `agents` with:
+To do so, replace the previous code (2 lines) with:
 
 ```python
-simulator.register_attacker("MyAttacker", entry_points=["ComputerA:access"], goals=["FolderB:stealSecrets"])
-agents =  [{'name': "MyAttacker", "agent": RandomAgent({})}]
+# Create agent settings
+agent_settings: AgentSettings = {
+    "MyAttacker": AttackerSettings(
+        "MyAttacker",
+        entry_points={"ComputerA:access"},
+        goals={"FolderB:stealSecrets"},
+        policy=RandomAgent
+    )
+}
+simulator = MalSimulator(graph, agent_settings=agent_settings)
+run_simulation(simulator, agent_settings)
+
+import pprint
+pprint.pprint(simulator.recording)
 ```
 
-This registers an attacker in the simulator, and creates a list of decision agents that can be used to take decisions for the simulator attacker.
+This registers an attacker in the simulator, gives a dict of agents to `run_simulation` which will use the policy set in the AttackerSettings object. We then print the recording of the simulation.

@@ -1,36 +1,39 @@
-# Tutorial 1 - Create model and run simulations
+# Tutorial 2 - Create model and run simulations
 
 In this tutorial you will learn how to load a language, create a model and run simulations on the generated attack graph.
 
 ## Step by step
-
+### Environment set-up
 Create a directory for the tutorial:
 
-`mkdir mal-tutorial1 && cd mal-tutorial1`
+`mkdir mal-tutorial2 && cd mal-tutorial2`
 
 Download tyrLang from github and put tyrLang in the directory:
 
 `git clone https://github.com/mal-lang/tyrLang.git`
 
-Create a python virtual environment in the directory:
+Create a Python virtual environment and activate it.
+- On Linux-based operating systems:
+```
+python -m venv .venv
+source .venv/bin/activate
+```
+- On Windows:
+```
+python -m venv .venv
+.\.venv\Scripts\activate
+```
+Install the requirements:
+```
+pip install mal-toolbox
+pip install mal-simulator
+```
 
-`python -m virtualenv .venv`
+### Helper Functions
 
-or
+Create a python file in the directory called `tutorial2.py` with your text editor of choice.
 
-`python -m venv .venv`
-
-Use your virtual environment:
-
-`source .venv/bin/activate`
-
-Install requirements: 
-- `pip install mal-toolbox`
-- `pip install mal-simulator`
-
-Create a python file in the directory called `simulate.py` with your text editor of choice.
-
-copy this code into `simulate.py`:
+Copy this piece of code into `tutorial2.py`:
 
 ```python
 
@@ -47,51 +50,76 @@ def connect_net_to_net(model: Model, net1: ModelAsset, net2: ModelAsset):
     """
     cr_asset_name = f"ConnectionRule {net1.name} {net2.name}"
     cr_asset = model.add_asset("InternetworkConnectionRule", cr_asset_name)
-    net1.add_associated_assets("interNetConnections", [cr_asset])
-    net2.add_associated_assets("interNetConnections", [cr_asset])
+    net1.add_associated_assets("interNetConnections", {cr_asset})
+    net2.add_associated_assets("interNetConnections", {cr_asset})
     return cr_asset
 
 
-def connect_app_to_net(model: Model, app: ModelAsset, net: ModelAsset):
+def connect_app_to_net(model: Model, app: ModelAsset, net: ModelAsset) -> ModelAsset:
     """
     Create a connection rule between app and net and return it.
     """
     cr_asset_name = f"ConnectionRule {app.name} {net.name}"
     cr_asset = model.add_asset("ConnectionRule", cr_asset_name)
-    app.add_associated_assets("appConnections", [cr_asset])
-    net.add_associated_assets("netConnections", [cr_asset])
+    app.add_associated_assets("appConnections", {cr_asset})
+    net.add_associated_assets("netConnections", {cr_asset})
     return cr_asset
 
 
-def add_vulnerability_to_app(model: Model, app: ModelAsset):
+def add_vulnerability_to_app(model: Model, app: ModelAsset) -> ModelAsset:
     """
     Add vulnerability and association from `app` to the vuln.
     Return the vuln.
     """
     asset_name = f"Vulnerability {app.name}"
     vuln_asset = model.add_asset("SoftwareVulnerability", asset_name)
-    vuln_asset.add_associated_assets("application", [app])
+    vuln_asset.add_associated_assets("application", {app})
     return vuln_asset
 
 
-def add_data_to_app(model: Model, app: ModelAsset):
+def add_data_to_app(model: Model, app: ModelAsset, data_asset_name: str) -> ModelAsset:
     """
     Add a data asset and association from `app` to the data.
-    reutrn the data asset.
+    return the data asset.
     """
-    asset_name = f"Data on {app.name}"
-    data_asset = model.add_asset("Data", asset_name)
-    data_asset.add_associated_assets("containingApp", [app])
+    data_asset = model.add_asset("Data", data_asset_name)
+    data_asset.add_associated_assets("containingApp", {app})
     return data_asset
 
+def add_user_to_app(model: Model, app: ModelAsset, data_asset_name: str) -> ModelAsset:
+    """
+    Add a user asset and association from `app` to the user.
+    return the user asset.
+    """
+    user_asset = model.add_asset("Identity", data_asset_name)
+    user_asset.add_associated_assets("execPrivApps", {app})
+    return user_asset
+
+def add_creds_to_user(model: Model, identity: ModelAsset, data_asset_name: str) -> ModelAsset:
+    """
+    Add a credentials asset and association from `identity` to the credentials.
+    return the credentials asset.
+    """
+    creds_asset = model.add_asset("Credentials", data_asset_name)
+    creds_asset.add_associated_assets("identities", {identity})
+    return creds_asset
 
 ```
 
-These helper functions are made to work with the MAL language TyrLang, association fieldnames and asset types are specific per language.
+These helper functions are made to work with the MAL language TyrLang, association fieldnames and asset types are specific per language. Therefore, they would need to be adapted depending on the MAL language in use.
 
 Each function creates assets in a model and connects the assets to other assets using associations (associatoin fieldnames to be more exact).
 
-Lets create a model and use the helper methods. Add this to the end of the file:
+### Model Creation
+
+Let's create a model and use the helper functions. First, add these imports to the others at the beginning of the python file:
+
+```python
+from maltoolbox.attackgraph import AttackGraph
+from maltoolbox.visualization.graphviz_utils import render_model, render_attack_graph
+```
+
+Then, add this to the end of the file:
 
 ```python
 def create_model(lang_graph: LanguageGraph) -> Model:
@@ -118,7 +146,13 @@ def create_model(lang_graph: LanguageGraph) -> Model:
     add_vulnerability_to_app(model, app4)
 
     # Add data to app4
-    add_data_to_app(model, app4)
+    add_data_to_app(model, app4, "DataOnApp4")
+
+    # Add user to app3
+    user_on_app_3 = add_user_to_app(model, app3, "UserOnApp3")
+
+    # Add user to app3
+    add_creds_to_user(model, user_on_app_3, "User3Creds")
 
     return model
 
@@ -142,7 +176,11 @@ if __name__ == '__main__':
     main()
 ```
 
-Uncomment the line with 'render_model' and run the file with `python simulate.py` to see a [render](my-model.gv.pdf) of the model. This can be helpful to debug generated models.
+### Model & Attack Graph Rendering
+
+For the next steps you need the tool **Graphviz**. If you do not have already installed it you might find more information about it in the following link: [How to download & install Graphviz](https://github.com/mal-lang/mal-toolbox?tab=readme-ov-file#requirements). 
+
+Once Graphviz is installed, uncomment the line with 'render_model' and run the file with `python tutorial2.py` to see a [render](my-model.gv.pdf) of the model. This can be helpful to debug generated models. 
 
 Then try it with the other line (render_graph) to see a [render](my-attack-graph.gv.pdf) of the attack graph. This will not be very helpful, but gives a feel of the size of the graph.
 
@@ -150,13 +188,16 @@ The attack graph is a representation of the model that folds out all of the atta
 
 One option is to work with the attack graph as it is. This requires MAL knowledge about how the graph is structured, what the different types of attack steps mean, etc.
 
-Instead, we will use the `mal-simulator` to run simulations with different agents that can give us some knowledge of the attack graph (which in turn gives us knowledge of the imagined architecture).
+Instead, in the next section we will use the `mal-simulator` to run simulations with different agents that can give us some knowledge of the attack graph (which in turn gives us knowledge of the imagined architecture).
+
+### Run Simulations
 
 To run simulations, add these imports to the top of the file (below the other imports):
 
 ```python
-from malsim import MalSimulator, run_simulation
-from malsim.agents import RandomAgent
+from malsim.mal_simulator import MalSimulator, run_simulation
+from malsim.config import AttackerSettings, DefenderSettings, MalSimulatorSettings, TTCMode
+from malsim.policies import RandomAgent, TTCSoftMinAttacker, PassiveAgent
 ```
 
 Now we can create a MalSimulator from the attack graph and run simulations.
@@ -166,33 +207,48 @@ Add this to the end of the `main` function:
 ```python
 
 simulator = MalSimulator(graph)
-agents = {}
-path = run_simulation(simulator, agents)
+path = run_simulation(simulator, {})
 
 ```
 
-When we run `python simulate.py` now we will just see "Simulation over after 0 steps.". This is because we don't have any agents. Let us add an attacker agent.
+When we run `python tutorial2.py` now we will just see "Simulation over after 0 steps.". This is because we don't have any agents. Let us add an attacker agent.
 
-Replace the line `agents = {}` with:
+Replace the above code with:
 
 ```python
-    simulator.register_attacker("MyAttacker", entry_points=["App 1:fullAccess"], goals=["DataOnApp4:read"])
-    agents =  [{'name': "MyAttacker", "agent": RandomAgent({})}]
+    agent_settings = {
+        "MyAttacker": AttackerSettings(
+            "MyAttacker",
+            entry_points={"App 1:fullAccess"},
+            goals={'DataOnApp4:read'},
+            policy=TTCSoftMinAttacker,
+        ),
+        "MyDefender": DefenderSettings(
+            "MyDefender",
+            policy=PassiveAgent,
+        )
+    }
+    simulator = MalSimulator(
+        graph,
+        agent_settings=agent_settings,
+        sim_settings=MalSimulatorSettings(
+            ttc_mode=TTCMode.PRE_SAMPLE
+        )
+    )
+
+    run_simulation(simulator, agent_settings)
+    import pprint
+    pprint.pprint(simulator.recording)
 ```
 
-This registers an attacker in the simulator, and creates a list of decision agents that can be used to take decisions for the simulator attacker.
+This creates a dict of agents that are used for registering agents and running policies with `run_simulation`. The attacker agent uses a policy which tries to take the easiest node (low TTC) every step and the defender is passive (does nothing).
 
-When we run `python simulate.py` now, we can see that the simulation runs until the attacker reaches `DataOnApp4:read`.
-This tells us that there was a path from `App 1` to `DataOnApp4`.
+When we run `python tutorial2.py` now, we can see that the simulation runs until the attacker reaches `DataOnApp4:read`. This tells us that there was a path from `App 1` to `DataOnApp4`.
 
-As we repeat the command, we can see that it reaches it on different iterations, since it is a random agent.
+As we repeat the command, we can see that it reaches it on different iterations, since it is a probabilistic agent.
 
-Try this out with different agents in `malsim.agents`.
+Try this out with different policies in `malsim.policies`.
 
-`run_simulation` will return the path taken by each agent.
+`run_simulation` will return the recording of the simulation which can be found also in `simulator.recording`.
 
-To make it more interesting, we can add TTCs to the simulations and use the TTCSoftMinAttacker policy for our attacker.
-
-We can also add a defender.
-
-See the finished script in [simulate.py](simulate.py).
+See the finished script in [tutorial2.py](tutorial2.py).
