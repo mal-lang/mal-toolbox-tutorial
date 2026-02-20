@@ -1,8 +1,8 @@
 # Tutorial 1 - Create a language and a model
-In this tutorial, you will learn how to build a simple MAL language and create a model from it.
+In this tutorial, you will learn how to build a simple MAL language, create a model from it and run simulations.
 
 ## Step by step
-### Environment set-up
+### Environment Set-up
 Create a directory for the tutorial and set it as your working directory: `mkdir mal-tutorial1 && cd mal-tutorial1`
 Create a Python virtual environment and activate it.
 - On Linux-based operating systems:
@@ -21,10 +21,8 @@ pip install mal-toolbox
 pip install mal-simulator
 ```
 
-### MAL language creation
-Create a MAL file in the same directory called `my-language.mal`.
-
-Copy this code into `my-language.mal`:
+### Definition of a MAL Language
+To define a MAL-Language or ***MAL-Lang***, create a file in the same directory called `my-language.mal` and copy the following code into it:
 
 ```
 #id: "org.mal-lang.my-language"
@@ -39,9 +37,9 @@ category System {
         & access
             -> compromise
 	    | compromise
-            ->  folder.accessFolder
-            -> toComputer.connect
-            -> toComputer.crackPassword
+            -> folder.accessFolder,
+               toComputer.connect,
+               toComputer.crackPassword
     }
     asset Folder {
         | accessFolder
@@ -56,7 +54,7 @@ associations {
 }
 ```
 
-This piece of code defines a simple MALLang. We define a category called System that holds two assets:
+This piece of code defines a simple example of MAL-Language. We define a category called System that holds two assets:
 - Computer
     - If steps `connect` and `crackPassword` happen, then `access` would be triggered, which at the same time would trigger `compromise`.
     - If `compromise` is activated, we would move to the step `accessFolder` in asset `Folder`.
@@ -65,9 +63,9 @@ This piece of code defines a simple MALLang. We define a category called System 
 
 In the `associations` section we define the relationship assets have. In this case, `Computer` and `Folder` have an N to M relationship, represented by the `*`.
 
-Once we have the MALLang file, we can create a python file to create models from this language.
+Once we have the MAL-Lang file, we can create a python script to automate the creation of *Language Graphs* and *Models* based on this MAL-language. To get a deeper insight into the **MAL languages syntaxis**, [visit the MAL Documentation repository](https://github.com/mal-lang/mal-documentation/wiki/1.-MAL-Syntax)
 
-### Create and compile the model
+### Creation of Models and Language Graphs
 Create a .py file in the same directory called `tutorial1.py`.
 
 Copy this code into `tutorial1.py`:
@@ -104,7 +102,7 @@ In this simple function, we create:
 - A connection between `ComputerA` and `ComputerB`. The string `"computer2"` comes from the `ComputerConnection` association in the MAL language we created. 
 - Two connections between the computer and folder instances. The strings `"folder"` come from the `ComputerFolderConnection` association.
 
-Now we can instantiate the model and compile. Add this to the end of the file:
+Now we can instantiate the model. Add this to the end of the file:
 
 ```python
 def main():
@@ -120,10 +118,10 @@ def main():
 if __name__ == "__main__":
     main()
 ```
-Change `lang_file` accordingly. Here we create the model using our own language. To compile it, run the script with `python tutorial1.py`.
+By executing this code, we create a model using a language graph, which in turn has been defined using our MAL-Lang "my-language.mal" (*my-language.mal* --> *LanguageGraph* --> *model*) . To do so, run the script with `python tutorial1.py`.
 
-### Create an attack graph
-To create an attack graph, we use the model and the MALLang. Add this import to the top of the file (below the other imports):
+### Create an Attack Graph
+To create an attack graph, we use the model and the MAL-Lang. Add this import to the top of the file (below the other imports):
 
 ```python
 from maltoolbox.attackgraph import AttackGraph
@@ -138,6 +136,8 @@ graph = AttackGraph(my_language, model)
 
 The attack graph is a representation of the model that folds out all of the attack steps defined in the MAL language. This can be used to run analysis or simulations.
 
+If you would like to know more about the concepts ***LanguageGraph***, ***Model*** or ***AttackGraph***, [visit this Wiki](https://github.com/mal-lang/mal-toolbox/wiki/MAL-Toolbox-concepts)
+
 ### Run simulation
 To run simulations, add these imports to the top of the file (below the other imports):
 
@@ -147,7 +147,7 @@ from malsim.types import AgentSettings
 from malsim.policies import RandomAgent
 ```
 
-Now we can create a MalSimulator from the attack graph `graph` and run simulations.
+Now we can create a MalSimulator object from the attack graph `graph` and run simulations.
 
 Add this to the end of the `main` function:
 
