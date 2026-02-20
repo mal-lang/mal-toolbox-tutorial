@@ -1,10 +1,10 @@
-# Tutorial 5 - How to use the MAL Sim GUI
+# Tutorial 5 - How to use the MALSIM GUI
 
-In this tutorial we learn how to use the dedicated Graphical User Interface for the MAL Sim tool. Before starting this tutorial, it is advisable to complete tutorials [1](https://github.com/mal-lang/mal-toolbox-tutorial/blob/main/tutorials/tutorial1/language-model-tutorial.md) and [2](https://github.com/mal-lang/mal-toolbox-tutorial/blob/main/tutorials/tutorial2/model-tutorial.md) on working with MAL languages, models, and simulations.
+In this tutorial we learn how to use the dedicated Graphical User Interface for the MALSIM tool, or malsim-gui. Before starting this tutorial, it is advisable to complete tutorials [1](https://github.com/mal-lang/mal-toolbox-tutorial/blob/main/tutorials/tutorial1/language-model-tutorial.md) and [2](https://github.com/mal-lang/mal-toolbox-tutorial/blob/main/tutorials/tutorial2/model-tutorial.md) on working with MAL languages, models, and simulations.
 
-## Starting MAL-Sim-GUI
+## Starting MALSIM GUI
 
-The most user-friendly way to run the GUI is via Docker. If you would like to run it without using Docker, you might find more information about this How-To, next to more information about this GUI-tool, in the MAL-Sim-GUI dedicated repository: [Link to Repo](https://github.com/mal-lang/malsim-gui)
+The most user-friendly way to run the GUI is via Docker. If you would like to run it without using Docker, you might find more information about this How-To, next to more information about this tool, in the malsim-gui dedicated repository: [Link to Repo](https://github.com/mal-lang/malsim-gui)
 
 To proceed with Docker:
 
